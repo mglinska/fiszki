@@ -1,0 +1,47 @@
+﻿@model FlascardViewModel;
+@{
+    ViewData["Title"] = "Flashcards";
+}
+
+<div id="Flashcards" class="">
+    <div class="text-center">
+        <h1 class="display-4 p2">{{message}}</h1>
+    </div>
+    <div></div>
+
+    <h2 class="display-4 pt-4 text-center">Avers</h2>
+    <div class="border border-secondary alert-info p-3">
+	    <h1 class="display-4 align-baseline">Word: {{flashcard.avers.word}}</h1>
+	    <h2 class="display-6 justify-content-lg-end">Description: {{flashcard.avers.description}}</h2>
+	    <h2 class="display-6">Evaluation: {{flashcard.avers.evaluation}}</h2>
+    </div>
+
+    <h2 class="display-4 pt-4 text-center">Revers</h2>
+    <div class="alert-danger border border-secondary p-3">
+	    <h1 class="display-4">Word: {{flashcard.revers.word}}</h1>
+	    <h2 class="display-6">Description: {{flashcard.revers.description}}</h2>
+	    <h2 class="display-6">Evaluation: {{flashcard.revers.evaluation}}</h2>
+    </div>
+</div>
+
+<script>
+       let app = new Vue({
+        el: '#Flashcards',
+        data: {
+            message: `Hello world in Vue 2:D`,
+
+		    flashcard: {
+                avers: {
+			        word: '@Model.FCard.Avers.Word',
+			        description: '@Model.FCard.Avers.Description',
+			        evaluation: '@Model.FCard.Avers.Evaluation'
+                },
+                revers: {
+			        word: '@Model.FCard.Revers.Word',
+			        description: '@Model.FCard.Revers.Description',
+			        evaluation: '@Model.FCard.Revers.Evaluation'
+                }
+		    }
+        }
+    })
+</script>
