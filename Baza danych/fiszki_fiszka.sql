@@ -27,7 +27,6 @@ CREATE TABLE `fiszka` (
   `id_kolekcja` int NOT NULL,
   `pytanie` varchar(200) NOT NULL,
   `odpowiedz` varchar(200) NOT NULL,
-  `zapamietana` tinyint NOT NULL,
   PRIMARY KEY (`id_fiszka`),
   KEY `fiszka_ibfk_1` (`id_kolekcja`),
   CONSTRAINT `fiszka_ibfk_1` FOREIGN KEY (`id_kolekcja`) REFERENCES `kolekcja` (`id_kolekcja`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-14 15:59:26
+-- Dump completed on 2022-03-15 10:16:37

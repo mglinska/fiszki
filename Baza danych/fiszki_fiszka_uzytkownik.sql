@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `kolekcja`
+-- Table structure for table `fiszka_uzytkownik`
 --
 
-DROP TABLE IF EXISTS `kolekcja`;
+DROP TABLE IF EXISTS `fiszka_uzytkownik`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kolekcja` (
-  `id_kolekcja` int NOT NULL AUTO_INCREMENT,
-  `nazwa` varchar(100) NOT NULL,
-  `data_utworzenia` datetime NOT NULL,
-  `opis` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id_kolekcja`)
+CREATE TABLE `fiszka_uzytkownik` (
+  `id_fiszka` int NOT NULL,
+  `login_uzytkownik` varchar(15) NOT NULL,
+  `zapamietana` tinyint NOT NULL,
+  PRIMARY KEY (`id_fiszka`,`login_uzytkownik`),
+  KEY `fiszka_uzytkownik_ibfk_2` (`login_uzytkownik`),
+  CONSTRAINT `fiszka_uzytkownik_ibfk_1` FOREIGN KEY (`id_fiszka`) REFERENCES `fiszka` (`id_fiszka`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fiszka_uzytkownik_ibfk_2` FOREIGN KEY (`login_uzytkownik`) REFERENCES `uzytkownik` (`login_uzytkownik`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `kolekcja`
+-- Dumping data for table `fiszka_uzytkownik`
 --
 
-LOCK TABLES `kolekcja` WRITE;
-/*!40000 ALTER TABLE `kolekcja` DISABLE KEYS */;
-/*!40000 ALTER TABLE `kolekcja` ENABLE KEYS */;
+LOCK TABLES `fiszka_uzytkownik` WRITE;
+/*!40000 ALTER TABLE `fiszka_uzytkownik` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fiszka_uzytkownik` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
