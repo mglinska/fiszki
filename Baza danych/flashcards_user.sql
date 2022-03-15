@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: fiszki
+-- Host: localhost    Database: flashcards
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -16,31 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `kolekcja_uzytkownik`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `kolekcja_uzytkownik`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kolekcja_uzytkownik` (
-  `id_kolekcja` int NOT NULL,
-  `login_uzytkownik` varchar(15) NOT NULL,
-  `uprawnienia` varchar(50) NOT NULL,
-  `czas_nauki` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_kolekcja`,`login_uzytkownik`),
-  KEY `kolekcja_uzytkownik_ibfk_2` (`login_uzytkownik`),
-  CONSTRAINT `kolekcja_uzytkownik_ibfk_1` FOREIGN KEY (`id_kolekcja`) REFERENCES `kolekcja` (`id_kolekcja`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `kolekcja_uzytkownik_ibfk_2` FOREIGN KEY (`login_uzytkownik`) REFERENCES `uzytkownik` (`login_uzytkownik`) ON DELETE RESTRICT ON UPDATE CASCADE
+CREATE TABLE `user` (
+  `id_user` int NOT NULL,
+  `firstName` varchar(45) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(16) NOT NULL,
+  `is_admin` tinyint NOT NULL,
+  PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `kolekcja_uzytkownik`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `kolekcja_uzytkownik` WRITE;
-/*!40000 ALTER TABLE `kolekcja_uzytkownik` DISABLE KEYS */;
-/*!40000 ALTER TABLE `kolekcja_uzytkownik` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-15 10:16:37
+-- Dump completed on 2022-03-15 20:33:24

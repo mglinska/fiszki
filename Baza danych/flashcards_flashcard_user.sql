@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: fiszki
+-- Host: localhost    Database: flashcards
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `uzytkownik`
+-- Table structure for table `flashcard_user`
 --
 
-DROP TABLE IF EXISTS `uzytkownik`;
+DROP TABLE IF EXISTS `flashcard_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `uzytkownik` (
-  `login_uzytkownik` varchar(15) NOT NULL,
-  `haslo` varchar(8) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `typ` varchar(20) NOT NULL,
-  PRIMARY KEY (`login_uzytkownik`)
+CREATE TABLE `flashcard_user` (
+  `id_flashcard` int NOT NULL,
+  `id_user` int NOT NULL,
+  `memorized` tinyint NOT NULL,
+  PRIMARY KEY (`id_flashcard`,`id_user`),
+  KEY `flashcard_user_ibfk_2` (`id_user`),
+  CONSTRAINT `flashcard_user_ibfk_1` FOREIGN KEY (`id_flashcard`) REFERENCES `flashcard` (`id_flashcard`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `flashcard_user_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `uzytkownik`
+-- Dumping data for table `flashcard_user`
 --
 
-LOCK TABLES `uzytkownik` WRITE;
-/*!40000 ALTER TABLE `uzytkownik` DISABLE KEYS */;
-/*!40000 ALTER TABLE `uzytkownik` ENABLE KEYS */;
+LOCK TABLES `flashcard_user` WRITE;
+/*!40000 ALTER TABLE `flashcard_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `flashcard_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-15 10:16:37
+-- Dump completed on 2022-03-15 20:33:24

@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
--- Host: localhost    Database: fiszki
+-- Host: localhost    Database: flashcards
 -- ------------------------------------------------------
 -- Server version	8.0.27
 
@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `kolekcja`
+-- Table structure for table `collection_user`
 --
 
-DROP TABLE IF EXISTS `kolekcja`;
+DROP TABLE IF EXISTS `collection_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `kolekcja` (
-  `id_kolekcja` int NOT NULL AUTO_INCREMENT,
-  `nazwa` varchar(100) NOT NULL,
-  `data_utworzenia` datetime NOT NULL,
-  `opis` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id_kolekcja`)
+CREATE TABLE `collection_user` (
+  `id_collection` int NOT NULL,
+  `id_user` int NOT NULL,
+  `uprawnienia` varchar(50) NOT NULL,
+  `study_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_collection`,`id_user`),
+  KEY `collection_user_ibfk_2` (`id_user`),
+  CONSTRAINT `collection_user_ibfk_1` FOREIGN KEY (`id_collection`) REFERENCES `collection` (`id_collection`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `collection_user_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `kolekcja`
+-- Dumping data for table `collection_user`
 --
 
-LOCK TABLES `kolekcja` WRITE;
-/*!40000 ALTER TABLE `kolekcja` DISABLE KEYS */;
-/*!40000 ALTER TABLE `kolekcja` ENABLE KEYS */;
+LOCK TABLES `collection_user` WRITE;
+/*!40000 ALTER TABLE `collection_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `collection_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-15 10:16:37
+-- Dump completed on 2022-03-15 20:33:24
