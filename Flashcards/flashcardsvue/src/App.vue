@@ -1,39 +1,28 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-navigation-drawer
-        floating
-        permanent
-      >
-        <v-list
-          density="compact"
-          nav
-        >
-          <v-list-item prepend-icon="mdi-home" href="#/" title="Home" value="home"></v-list-item>
-          <v-list-item prepend-icon="mdi-information-outline" href="#/about" title="About" value="about"></v-list-item>
-          <v-list-item prepend-icon="mdi-login" href="#/login" title="Log in" value="about"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-plus" href="#/registration" title="Sign up" value="about"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-      <v-main>
+  <v-app>
+    <v-app-bar id="app-bar">
+      <div class="link">
+        <a href="#/">Strona główna</a>
+      </div>
+      <div class="link">
+        <a href="#/login">Zaloguj</a>
+      </div>
+      <div class="link">
+        <a href="#/registration">Zarejestruj</a>
+      </div>
+      <div class="link">
+        <a href="#/about">O nas</a>
+      </div>
+    
+    </v-app-bar>
+     <v-main>
         <About v-if="this.currentPath.slice(2) === 'about'" />
         <Login v-else-if="this.currentPath.slice(2) === 'login'" />
         <Registration v-else-if="this.currentPath.slice(2) === 'registration'" />
+        <collections v-else-if="this.currentPath.slice(2) === 'collections'" />
         <Home v-else />
       </v-main>
-    </v-layout>
-  </v-card>
-  <!--
-  <v-app>
-    <v-main>
-      <a href="#/">Home</a> |
-      <a href="#/about">About</a> |
-      <a href="#/login">Login</a> |
-      <a href="#/registration">Register</a>
-      <component :is="currentView" />
-    </v-main>
   </v-app>
-  -->
 </template>
 
 <script>
@@ -42,12 +31,14 @@ import About from './AboutPage.vue'
 import NotFound from './NotFoundPage.vue'
 import Registration from './RegistrationPage.vue'
 import Login from './LoginPage.vue'
+import Collections from './CollectionsPage.vue'
 
 const routes = {
   '/': Home,
   '/about': About,
   '/login': Login,
-  '/registration': Registration
+  '/registration': Registration,
+  '/collections': Collections
 }
 
 export default {
@@ -64,6 +55,7 @@ export default {
     About,
     Login,
     Registration,
+    Collections,
   },
   computed: {
     currentView() {
@@ -83,4 +75,15 @@ body{
   padding: 0;
   margin: 0;
 }
+
+#app-bar{
+  box-shadow: 0px 0px 0px 0px rgba(66, 68, 90, 1);
+  border: solid 2px;
+}
+
+.link{
+  display: inline-block;
+  padding: 20px;
+}
+
 </style>
