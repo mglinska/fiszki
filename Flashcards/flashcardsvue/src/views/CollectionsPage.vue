@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import DefultContent from './components/CollDefultContent.vue'
-import AddContent from './components/CollAddContent.vue'
-import EditContent from './components/CollEditContent.vue'
-import DeleteContent from './components/CollDeleteContent.vue'
+import DefultContent from '../components/CollDefultContent.vue'
+import AddContent from '../components/CollAddContent.vue'
+import EditContent from '../components/CollEditContent.vue'
+import DeleteContent from '../components/CollDeleteContent.vue'
 
 
 export default {
@@ -35,9 +35,5 @@ export default {
         background-color: green;
         display: block;
         margin: 10px;
-    }
-
-    input {
-        background-color: aquamarine;
     }
 </style>
