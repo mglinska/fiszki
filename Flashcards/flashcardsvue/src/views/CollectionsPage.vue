@@ -6,20 +6,20 @@
 
       <v-expansion-panel v-for="coll in collections" :key="coll.id">
         <v-expansion-panel-title color="green" hide-actions="True">
-          {{ coll.title }}
+           <h3>{{ coll.Name }}</h3>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
           <v-btn class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
-          <v-btn class="label" variant="contained-text" color="white">Usuń</v-btn>
+          <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-  
 
 </template>
 
 <script>
+import axios from 'axios'
 import DefultContent from '../components/CollDefultContent.vue'
 import AddContent from '../components/CollAddContent.vue'
 
@@ -28,17 +28,42 @@ export default {
     return {
       title: 'Collections',
       status: 0,
-      collections: [
-        {title: "Angielski - zwierzęta", id: 1},
-        {title: "POI - kartkówka", id: 2},
-        {title: "Stolice Państw", id: 3},
-      ]
+      collections: [],
     }
+  },
+  methods: {
+      refreshData() {
+        axios
+          .get("http://localhost:5085/api/" + "Collection")
+          .then( (response)=>{
+            this.collections = response.data;
+            console.log(response.data)
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
+      },
+      deleteCollection(id) {
+        if( !(confirm("Are you sure you want to delete this user?")) ) {
+          return;
+        }
+
+        axios.delete("http://localhost:5085/api/" + "Collection/" + id)
+          .then( ()=> {
+            this.refreshData();
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
+      }
   },
   components: {
     DefultContent,
     AddContent,
   },
+  mounted: function() {
+      this.refreshData();
+    }
 }
 </script>
 

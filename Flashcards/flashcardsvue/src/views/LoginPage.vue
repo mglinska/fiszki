@@ -49,18 +49,19 @@
     }),
     methods: {
       submit() {
-        //this.$router.push({ name: 'Home'});
-        //alert("walidacja po stronie serwera");
-        //document.getElementById('log_form').submit();
 
         const formData = {};
+    
         formData['email'] = this.email;
         formData['password'] = this.password;
-        const jsonFormData = JSON.stringify(formData)
-        axios.post('/', jsonFormData).then((response)=>{
+        formData['name'] = "";
+        formData['surname'] = "";
+
+        axios.post("http://localhost:5085/api/" + "User/login", formData).then(()=>{
           this.$router.push({ name: 'Home'});
-          console.log(response.data);
           alert("the form has been sent");
+        }).catch((error) => {
+          console.log(error.response)
         })
         
       },
