@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data: () => ({
       name: '',
@@ -87,9 +88,21 @@
     },
     methods: {
       submit() {
-        window.location.href = "#/";
-        alert("the form has been sent");
-        document.getElementById('reg_form').submit()
+        //console.log(this.name);
+        //this.$router.push({ name: 'Home'});
+        //alert("the form has been sent");
+        //document.getElementById('reg_form').submit();
+
+        const formData = {};
+        formData['name'] = this.name;
+        formData['email'] = this.email;
+        formData['password'] = this.password;
+        const jsonFormData = JSON.stringify(formData);
+        axios.post('/', jsonFormData).then((response)=>{
+          this.$router.push({ name: 'Home'});
+          console.log(response.data);
+          alert("the form has been sent");
+        })
       },
       validate() {
         this.$refs.form.resetValidation();
