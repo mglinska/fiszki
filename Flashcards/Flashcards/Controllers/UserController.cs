@@ -1,8 +1,5 @@
-﻿using Flashcards.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using System.Data;
 
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
@@ -25,7 +22,7 @@ namespace Flashcards.Controllers {
         }
 
         // --- Pobranie użytkownika po id
-        [HttpGet("{userId}")]
+        [HttpGet("{userId:int}")]
         public async Task<ActionResult<User>> GetUser( int userId ) {
             try {
                 return Ok(await _userRepository.GetUserById(userId));
@@ -33,6 +30,28 @@ namespace Flashcards.Controllers {
                 return BadRequest(ex.Message);
             }
         }
+
+        // --- Aktualizacja danych użytkownika
+        [HttpPut]
+        public async Task<ActionResult<User>> UpdateUser( User user ) {
+            try {
+                return Ok(await _userRepository.UpdateUser(user));
+            } catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // --- Rejestracja użytkownika
+        [Route("register")]
+        [HttpPost]
+        public async Task<ActionResult<User>> RegisterUser( User user ) {
+            try {
+                return Ok(await _userRepository.RegisterUser(user));
+            } catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         // --- Logowanie użytkownika
         [Route("login")]
@@ -53,29 +72,8 @@ namespace Flashcards.Controllers {
             }
         }
 
-        // --- Rejestracja użytkownika
-        [Route("register")]
-        [HttpPost]
-        public async Task<ActionResult<User>> RegisterUser( User user ) {
-            try {
-                return Ok(await _userRepository.RegisterUser(user));
-            } catch (Exception ex) {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // --- Aktualizacja danych użytkownika
-        [HttpPut]
-        public async Task<ActionResult<User>> UpdateUser( User user ) {
-            try {
-                return Ok(await _userRepository.UpdateUser(user));
-            } catch (Exception ex) {
-                return BadRequest(ex.Message);
-            }
-        }
-
         // --- Usuwanie użytkownika
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<string> DeleteUser( int id ) {
             return await _userRepository.DeleteUser(id);
         }

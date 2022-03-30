@@ -8,5 +8,6 @@ namespace Flashcards.Models {
 
         // --- Dodawanie encji do kontekstu bazy danych
         public DbSet<User> Users { get; set; }
+        public DbSet<Collection> Collections { get; set; }
     }
 }
