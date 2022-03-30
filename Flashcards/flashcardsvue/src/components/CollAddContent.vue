@@ -1,6 +1,7 @@
 <template>
     <h1 style="margin: 30px;">Dodaj kolekcje</h1>
-    <form method="post">
+    <v-btn :value="status" @click="$emit('update:status', 0)" class="label" variant="contained-text" color="white">Wróć</v-btn>
+    <form method="post" style="margin-left: 10px;">
     <label class="label3" for="i1">Podaj nazwę kolekcji</label><br>
     <input id="i1" class="input_temp" type="text" required name="collection_name"><br>
     <label class="label3">Chcesz dodać pierwszą fiszkę?</label><br>
@@ -9,9 +10,17 @@
     <label class="label3" for="i3">Odpowiedź</label><br>
     <input id="i3" class="input_temp" type="text" name="fc_answer"><br>
     <div></div>
-    <input class="input_temp" type="submit" value="Gotowe">
+    <input class="input_temp" type="submit" value="Gotowe" style="background-color: green;">
     </form>
 </template>
+
+<script>
+export default {
+  props: ['status'],
+  emits: ['update:status'],
+}
+</script>
+
 
 <style>
 
