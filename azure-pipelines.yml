@@ -8,6 +8,8 @@ trigger:
 
 pool:
   vmImage: 'windows-2022'
+  demands:
+  - npm
 
 variables:
   solution: '**/*.sln'
@@ -21,6 +23,11 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: Npm@1
+  displayName: Run npm install
+  inputs:
+    verbose: false
+    
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
