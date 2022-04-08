@@ -88,12 +88,11 @@
     },
     methods: {
       submit() {
-
         const formData = {};
         formData['name'] = this.name;
         formData['surname'] = "null";
         formData['email'] = this.email;
-        formData['password'] = this.password;
+        formData['password'] = this.encrypt(this.password);
         
         axios.post("http://localhost:5085/api/" + "User/register", formData).then(()=>{
           this.$router.push({ name: 'Home'});
@@ -101,6 +100,10 @@
         }).catch((error) => {
           console.log(error.response)
         })
+      },
+      encrypt(password) {
+        const CryptoJS = require('crypto-js');
+        return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
       },
       validate() {
         this.$refs.form.resetValidation();

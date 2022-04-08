@@ -53,7 +53,7 @@
         const formData = {};
     
         formData['email'] = this.email;
-        formData['password'] = this.password;
+        formData['password'] = this.encrypt(this.password);
         formData['name'] = "";
         formData['surname'] = "";
 
@@ -64,6 +64,10 @@
           console.log(error.response)
         })
         
+      },
+      encrypt(password) {
+        const CryptoJS = require('crypto-js');
+        return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
       },
       validate() {
         this.$refs.form.resetValidation();
