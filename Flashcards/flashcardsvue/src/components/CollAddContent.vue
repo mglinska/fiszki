@@ -1,26 +1,81 @@
 <template>
     <h1 style="margin: 30px;">Dodaj kolekcje</h1>
-    <form method="post">
-    <label class="label3" for="i1">Podaj nazwę kolekcji</label><br>
-    <input id="i1" class="input_temp" type="text" required name="collection_name"><br>
-    <label class="label3">Chcesz dodać pierwszą fiszkę?</label><br>
-    <label class="label3" for="i2">Pytanie</label><br>
-    <input id="i2" class="input_temp" type="text" name="fc_question"><br>
-    <label class="label3" for="i3">Odpowiedź</label><br>
-    <input id="i3" class="input_temp" type="text" name="fc_answer"><br>
-    <div></div>
-    <input class="input_temp" type="submit" value="Gotowe">
-    </form>
+
+    <v-btn :value="status" @click="$emit('update:status', 0)" class="label" variant="contained-text" color="white">Wróć</v-btn>
+    
+    <v-form 
+    id="add_coll_form"
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+    <v-text-field
+      v-model="name"
+      :rules="nameRules"
+      label="Wprowadź nazwę kolekcji"
+      required
+    ></v-text-field>
+
+     <v-text-field
+      v-model="description"
+      :rules="descriptionRules"
+      label="Opis"
+    ></v-text-field>
+
+    <v-btn
+      color="success"
+      class="mr-4"
+      @click="validate"
+    >
+      Dodaj!
+    </v-btn>
+
+  </v-form>
 </template>
 
-<style>
+<script>
+import axios from 'axios'
 
-.label3 {
-    background-color: rgb(214, 214, 214);
+export default {
+  props: ['status'],
+  emits: ['update:status'],
+  data: () => ({
+      name: '',
+      nameRules: [
+        v => !!v || 'Nazwa kolekcji jest wymagana',
+        v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
+        v => (v && v.length <= 50) || 'Nazwa kolekcji musi mieć mniej niż 50 znaki'
+      ],
+      description: '',
+      descriptionRules: [
+        v => (v.length <= 255) || 'Opis kolekcji musi mieć mniej niż 255 znaków',
+      ],
+    }),
+    methods: {
+      submit() {
 
+        const formData = {};
+    
+        formData['name'] = this.name;
+        formData['description'] = this.description;
+
+        axios.post("http://localhost:5085/api/" + "Collection", formData).then(()=>{
+          this.$emit('update:status', 0);
+          this.$parent.refreshData();
+          alert("Poprawnie dodano nową kolekcję");
+        }).catch((error) => {
+          console.log(error.response)
+        })
+      },
+      validate() {
+        this.$refs.form.resetValidation();
+        const prom = this.$refs.form.validate();
+        prom.then((a) => {
+          if(a.valid) {
+            this.submit();
+          }
+        });
+      },
+    },
 }
-
-.input_temp {
-    background-color: aquamarine;
-}
-</style>
+</script>

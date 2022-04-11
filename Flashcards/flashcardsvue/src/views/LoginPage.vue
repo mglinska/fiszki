@@ -32,6 +32,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data: () => ({
       email: '',
@@ -48,9 +49,20 @@
     }),
     methods: {
       submit() {
-        window.location.href = "#/";
-        alert("walidacja po stronie serwera");
-        document.getElementById('log_form').submit();
+
+        const formData = {};
+    
+        formData['email'] = this.email;
+        formData['password'] = this.password;
+        formData['name'] = "";
+        formData['surname'] = "";
+
+        axios.post("http://localhost:5085/api/" + "User/login", formData).then(()=>{
+          this.$router.push({ name: 'Home'});
+          alert("the form has been sent");
+        }).catch((error) => {
+          console.log(error.response)
+        })
         
       },
       validate() {
