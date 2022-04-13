@@ -11,33 +11,31 @@ namespace Flashcards.Models {
         }
 
         public async Task<List<User>> GetAllUsers() {
-            return await _context.Users.ToListAsync();
+            return await _context.User.ToListAsync();
         }
 
         public async Task<User> GetUserById( int userId ) {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.User.FirstOrDefaultAsync(u => u.Id_user == userId);
         }
 
         public async Task<User> GetUserByLogin( string login ) {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == login);
+            return await _context.User.FirstOrDefaultAsync(u => u.Email == login);
         }
 
         public async Task<User> RegisterUser( User user ) {
-            var result = await _context.Users.AddAsync(user);
+            var result = await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
             return result.Entity;
         }
 
         public async Task<User> UpdateUser( User user ) {
-            var result = await _context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+            var result = await _context.User.FirstOrDefaultAsync(u => u.Id_user == user.Id_user);
 
             if (result != null) {
                 result.Email = user.Email;
                 result.Password = user.Password;
-                result.Name = user.Name;
-                result.Surname = user.Surname;
+                result.First_name = user.First_name;
                 result.Is_admin = user.Is_admin;
-                result.Is_blocked = user.Is_blocked;
 
                 await _context.SaveChangesAsync();
 
@@ -49,10 +47,35 @@ namespace Flashcards.Models {
 
         public async Task<string> DeleteUser( int userId ) {
             try {
-                var result = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                var result = await _context.User.FirstOrDefaultAsync(u => u.Id_user == userId);
 
                 if (result != null) {
-                    _context.Users.Remove(result);
+                    var collectionUser = await _context.Collection_user.FirstOrDefaultAsync(cu => cu.Id_user == userId);
+
+                    if(collectionUser != null) {
+                        var collections = await _context.Collection.Where(c => c.Id_collection == collectionUser.Id_collection).ToListAsync();
+
+                        foreach (var collection in collections) {
+                            if (collection != null) {
+                                var flashcards = await _context.Flashcard.Where(f => f.Id_collection == collection.Id_collection).ToListAsync();
+
+                                if (flashcards != null) {
+                                    foreach (var flashcard in flashcards) {
+                                        _context.Flashcard.Remove(flashcard);
+                                        await _context.SaveChangesAsync();
+                                    }
+                                }
+
+                                _context.Collection.Remove(collection);
+                                await _context.SaveChangesAsync();
+                            }
+                        }
+
+                        _context.Collection_user.Remove(collectionUser);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    _context.User.Remove(result);
                     await _context.SaveChangesAsync();
 
                     return "Operation successful!";

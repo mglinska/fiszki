@@ -17,17 +17,27 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _userRepository.GetAllUsers());
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
         // --- Pobranie użytkownika po id
         [HttpGet("{userId:int}")]
-        public async Task<ActionResult<User>> GetUser( int userId ) {
+        public async Task<ActionResult<User>> GetUserById( int userId ) {
             try {
                 return Ok(await _userRepository.GetUserById(userId));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
+        // --- Pobranie użytkownika po emailu
+        [HttpGet("{email}")]
+        public async Task<ActionResult<User>> GetUserByEmail( string email ) {
+            try {
+                return Ok(await _userRepository.GetUserByLogin(email));
+            } catch (Exception ex) {
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -37,7 +47,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _userRepository.UpdateUser(user));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -48,7 +58,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _userRepository.RegisterUser(user));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -62,14 +72,35 @@ namespace Flashcards.Controllers {
 
                 if (loginUser != null) {
                     if (user.Password.Equals(loginUser.Password)) {
+                        HttpContext.Session.SetString("login", user.Email);
                         return Ok(loginUser);
                     }
                 }
 
                 throw new Exception();
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
+        }
+
+        [Route("check-logged-user")]
+        [HttpGet]
+        public async Task<ActionResult<User>> CheckLoggedUser() {
+            string login = HttpContext.Session.GetString("login");
+
+            if (string.IsNullOrEmpty(login)) {
+                return await _userRepository.GetUserByLogin(login);
+            }
+
+            return null;
+        }
+
+        [Route("logout")]
+        [HttpGet]
+        public void LogoutUser() {
+            HttpContext.Session.Remove("login");
+
+            return;
         }
 
         // --- Usuwanie użytkownika
