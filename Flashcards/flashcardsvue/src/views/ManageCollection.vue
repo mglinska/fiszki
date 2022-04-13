@@ -7,18 +7,25 @@
     <div id="flashcard_container">
       <v-responsive>
         <v-card v-for="fc in flashcards" :key="fc.id" class="flashcard">
-          <v-card-text>
-            {{ fc.question }}
-          </v-card-text>
-          <v-card-text>
-            {{ fc.answer }}
-          </v-card-text>
-          <v-card-actions>
-            <v-btn icon="mdi-trash-can" variant="outlined" class="action_delete">
-            </v-btn>
-            <v-btn icon="mdi-pencil" variant="outlined" class="action_edit">
-            </v-btn>
-          </v-card-actions>
+          <div class="fc_content">
+            <v-card-text>
+              {{ fc.question }}
+            </v-card-text>
+            <v-card-text>
+              {{ fc.answer }}
+            </v-card-text>
+          </div>
+          <div class="fc_actions">
+            <v-card-actions>
+              <v-col align="center">
+                <v-btn icon="mdi-trash-can" variant="outlined" class="action_delete">
+                </v-btn>
+                <v-btn icon="mdi-pencil" variant="outlined" class="action_edit">
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+          </div>
+          <div style="clear: both;"></div>
         </v-card>
       </v-responsive>
     </div>
@@ -53,8 +60,6 @@ export default {
       FlashcardAdd,
     }
 }
-
-
 </script>
 
 <style scoped>
@@ -67,7 +72,7 @@ export default {
 .flashcard {
   margin: 5px;
   background: gainsboro;
-  max-height: 200px;
+  max-height: 140px;
 }
 
 #flashcard_container {
@@ -78,5 +83,29 @@ export default {
   margin: auto;
   width: 20%;
 }
+
+.fc_content {
+  float:left;
+  width: 70%;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.fc_actions {
+  float:left;
+  width: 30%;
+  height: 100%;
+  text-align: center;
+}
+
+.action_delete, .action_edit {
+  margin: 2px 0px;
+  float: right;
+  display: default;
+}
+
+
+
+
 
 </style>
