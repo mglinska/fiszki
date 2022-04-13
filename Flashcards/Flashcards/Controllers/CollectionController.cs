@@ -17,7 +17,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _collectionRepository.GetAllCollections());
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _collectionRepository.GetCollectionById(collectionId));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -37,17 +37,17 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _collectionRepository.GetCollectionByName(collectionName));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
         // --- Utworzenie nowej kolekcji
         [HttpPost]
-        public async Task<ActionResult<User>> CreateCollection( Collection collection ) {
+        public async Task<ActionResult<Collection>> CreateCollection( Collection collection, int userId ) {
             try {
-                return Ok(await _collectionRepository.CreateCollection(collection));
+                return Ok(await _collectionRepository.CreateCollection(collection, userId));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _collectionRepository.UpdateCollection(collection));
             } catch (Exception ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
         }
 

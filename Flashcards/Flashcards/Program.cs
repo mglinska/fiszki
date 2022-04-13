@@ -26,6 +26,9 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 // --- Pod³¹czenie repozytoriów
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
+builder.Services.AddScoped<IFlashcardRepository, FlashcardRepository>();
+builder.Services.AddScoped<ICollectionUserRepository, CollectionUserRepository>();
+builder.Services.AddScoped<IFlashcardUserRepository, FlashcardUserRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
