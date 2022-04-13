@@ -6,13 +6,13 @@
     <FlashcardAdd v-if="this.status === 1" v-model:status="status"/>
     <div id="flashcard_container">
       <v-responsive>
-        <v-card v-for="fc in flashcards" :key="fc.id" class="flashcard">
+        <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
           <div class="fc_content">
             <v-card-text>
-              {{ fc.question }}
+              {{ fc.Question }}
             </v-card-text>
             <v-card-text>
-              {{ fc.answer }}
+              {{ fc.Answer }}
             </v-card-text>
           </div>
           <div class="fc_actions">
@@ -33,10 +33,12 @@
 
 <script>
 import FlashcardAdd from '../components/FlashcardAdd.vue'
+import axios from 'axios'
 export default {
     props: ['collName'],
     data() {
       return {
+        /*
         flashcards: [
           {id: 1, id_coll: 1, question: 'pies', answer: 'dog'},
           {id: 2, id_coll: 1, question: 'kot', answer: 'cat'},
@@ -52,13 +54,36 @@ export default {
           {id: 12, id_coll: 1, question: 'ropucha', answer: 'toad'},
           {id: 13, id_coll: 1, question: 'ropucha', answer: 'toad'},
           {id: 14, id_coll: 1, question: 'ropucha', answer: 'toad'}
-        ],
+        ], */
+
+        flashcards: [],
         status: 0,
       }
     },
     components: {
       FlashcardAdd,
-    }
+    },
+    methods: {
+      refreshData() {
+        axios
+          .get("http://localhost:5085/api/" + "Flashcard")
+          .then( (response)=>{
+            this.flashcards = response.data;
+            console.log(response.data)
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
+      },
+      deleteCollection() {
+        if( !(confirm("Are you sure you want to delete this user?")) ) {
+          return;
+        }
+      },
+    },
+    mounted: function() {
+      this.refreshData();
+    },
 }
 </script>
 

@@ -90,7 +90,6 @@
       submit() {
         const formData = {};
         formData['name'] = this.name;
-        formData['surname'] = "null";
         formData['email'] = this.email;
         formData['password'] = this.encrypt(this.password);
         

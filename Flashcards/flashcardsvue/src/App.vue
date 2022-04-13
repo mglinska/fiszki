@@ -5,6 +5,7 @@
       <router-link class="link" :to="{ name: 'Login'}">Zaloguj</router-link>
       <router-link class="link" :to="{ name: 'Registration'}">Zarejestruj</router-link>
       <router-link class="link" :to="{ name: 'About'}">O nas</router-link>
+      <v-btn v-if="user.id_user != null"> Wyloguj </v-btn>
     </v-app-bar>
     
       <v-main>
@@ -14,13 +15,30 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       title: 'Fiszki',
+      user: [],
     }
   },
-}
+  methods: {
+    get_user() {
+      axios.get("http://localhost:5085/api/" + "User/check-logged-user")
+          .then( (response)=>{
+            this.user = response.data;
+            console.log(response.data)
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
+      },
+    },
+    mounted: function() {
+      this.get_user();
+    },
+  }
 </script>
 
 <style>

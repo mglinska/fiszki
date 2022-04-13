@@ -51,13 +51,15 @@
       submit() {
 
         const formData = {};
-    
+
+        formData['first_name'] = "";
         formData['email'] = this.email;
         formData['password'] = this.encrypt(this.password);
-        formData['name'] = "";
-        formData['surname'] = "";
+        
+        console.log(formData)
 
-        axios.post("http://localhost:5085/api/" + "User/login", formData).then(()=>{
+        axios.post("http://localhost:5085/api/" + "User/login", formData).then((response)=>{
+          console.log(response.data);
           this.$router.push({ name: 'Home'});
           alert("the form has been sent");
         }).catch((error) => {

@@ -50,16 +50,17 @@ export default {
       descriptionRules: [
         v => (v.length <= 255) || 'Opis kolekcji musi mieć mniej niż 255 znaków',
       ],
+      user: []
     }),
     methods: {
       submit() {
-
+        
         const formData = {};
-    
+        
         formData['name'] = this.name;
         formData['description'] = this.description;
-
-        axios.post("http://localhost:5085/api/" + "Collection", formData).then(()=>{
+        
+        axios.post("http://localhost:5085/api/" + "Collection/5", formData).then(()=>{
           this.$emit('update:status', 0);
           this.$parent.refreshData();
           alert("Poprawnie dodano nową kolekcję");
@@ -75,6 +76,15 @@ export default {
             this.submit();
           }
         });
+      },
+      get_user() {
+        axios.get("http://localhost:5085/api/" + "User/check-logged-user")
+          .then( (response)=>{
+            this.user = response.data;
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
       },
     },
 }
