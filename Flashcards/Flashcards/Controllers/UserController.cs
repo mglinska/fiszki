@@ -79,7 +79,7 @@ namespace Flashcards.Controllers {
 
                 throw new Exception();
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 
