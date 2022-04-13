@@ -1,25 +1,11 @@
 <template>
-  <h1 style="margin: 30px;">About</h1>
-
-  <v-app>
-    <v-main>
-      <UserList/>
-    </v-main>
-  </v-app>
+  <h1 style="margin: 30px;">About us</h1>
 </template>
 
 <script>
-import UserList from '../components/UserList.vue'
 
-export default {
-  name: 'App',
-
-  components: {
-    UserList,
-  },
-
-  data: () => ({
-    //
-  }),
-}
 </script>
+
+<style scoped>
+
+</style>

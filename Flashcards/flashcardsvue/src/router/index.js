@@ -4,6 +4,7 @@ import About from '../views/AboutPage.vue'
 import Registration from '../views/RegistrationPage.vue'
 import Login from '../views/LoginPage.vue'
 import Collections from '../views/CollectionsPage.vue'
+import ManageCollection from '../views/ManageCollection.vue'
 import NotFound from '../views/NotFoundPage.vue'
 
 const routes = [
@@ -32,12 +33,17 @@ const routes = [
         name: 'Collections',
         component: Collections
     },
-
     //przechytywanie niepoprawnych url (404)
     {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound
+    },
+    {
+        path: '/collections/:collName',
+        name: 'ManageCollection',
+        component: ManageCollection,
+        props: true
     }
 ]
 
