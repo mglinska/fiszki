@@ -23,6 +23,9 @@ builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseMySql( builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion( new Version(8, 0, 11 ) ) );
 });
 
+// --- Dodanie obs³ugi sesji 1/2
+builder.Services.AddSession();
+
 // --- Pod³¹czenie repozytoriów
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
@@ -40,6 +43,9 @@ var app = builder.Build();
 
 // --- Umo¿liwienie dostêpu z ka¿dej domeny 2/2
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+// --- Dodanie obs³ugi sesji 2/2
+app.UseSession();
 
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
