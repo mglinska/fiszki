@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlashcardContorller : ControllerBase {
+    public class FlashcardController : ControllerBase {
         private readonly IFlashcardRepository _flashcardRepository;
 
-        public FlashcardContorller( IFlashcardRepository flashcardRepository ) {
+        public FlashcardController( IFlashcardRepository flashcardRepository ) {
             _flashcardRepository = flashcardRepository;
         }
 
@@ -32,7 +32,7 @@ namespace Flashcards.Controllers {
         }
 
         // --- Utworzenie nowej fiszki
-        [HttpPost]
+        [HttpPost("{userId:int}")]
         public async Task<ActionResult<Flashcard>> CreateFlashcard( Flashcard flashcard, int userId ) {
             try {
                 return Ok(await _flashcardRepository.CreateFlashcard(flashcard, userId));

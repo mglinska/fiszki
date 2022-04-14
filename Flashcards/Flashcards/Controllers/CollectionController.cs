@@ -42,7 +42,7 @@ namespace Flashcards.Controllers {
         }
 
         // --- Utworzenie nowej kolekcji
-        [HttpPost]
+        [HttpPost("{userId:int}")]
         public async Task<ActionResult<Collection>> CreateCollection( Collection collection, int userId ) {
             try {
                 return Ok(await _collectionRepository.CreateCollection(collection, userId));

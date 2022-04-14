@@ -88,7 +88,7 @@ namespace Flashcards.Controllers {
         public async Task<ActionResult<User>> CheckLoggedUser() {
             string login = HttpContext.Session.GetString("login");
 
-            if (string.IsNullOrEmpty(login)) {
+            if (!string.IsNullOrEmpty(login)) {
                 return await _userRepository.GetUserByLogin(login);
             }
 
