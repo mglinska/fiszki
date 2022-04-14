@@ -3,7 +3,7 @@
         <h1> {{ collName }} </h1>
     </div>
     <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
-    <FlashcardAdd v-if="this.status === 1" v-model:status="status"/>
+    <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
     <div id="flashcard_container">
       <v-responsive>
         <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
@@ -35,7 +35,11 @@
 import FlashcardAdd from '../components/FlashcardAdd.vue'
 import axios from 'axios'
 export default {
-    props: ['collName'],
+    props: {
+      collName: String,
+      collId: Number,
+  },
+    
     data() {
       return {
         /*
@@ -58,6 +62,7 @@ export default {
 
         flashcards: [],
         status: 0,
+        coll_id: this.collId,
       }
     },
     components: {
@@ -65,11 +70,11 @@ export default {
     },
     methods: {
       refreshData() {
+        // musi byc po id kolekcji wyswietlanie fiszek
         axios
           .get("http://localhost:5085/api/" + "Flashcard")
           .then( (response)=>{
             this.flashcards = response.data;
-            console.log(response.data)
           })
           .catch( function(error) { 
             console.log(error.message)

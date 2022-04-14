@@ -37,7 +37,7 @@
 import axios from 'axios'
 
 export default {
-  props: ['status'],
+  props: ['status', 'coll_id'],
   emits: ['update:status'],
   data: () => ({
       awers: '',
@@ -54,14 +54,13 @@ export default {
 
         const formData = {};
     
-        formData['id_collection'] = 32;
+        formData['id_collection'] = this.coll_id;
         formData['question'] = this.awers;
         formData['answer'] = this.rewers;
         
         axios.post("http://localhost:5085/api/" + "Flashcard/5", formData).then(()=>{
           this.$emit('update:status', 0);
           this.$parent.refreshData();
-          alert("Poprawnie dodano nową kolekcję");
         }).catch((error) => {
           console.log(error.response)
         })

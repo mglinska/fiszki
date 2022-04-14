@@ -10,18 +10,7 @@
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo(coll.Name)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
-          <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-
-      <v-expansion-panel>
-        <v-expansion-panel-title color="green" hide-actions="True">
-           <h3>Angielski</h3>
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo('Angielski')" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
+          <v-btn @click="moveTo(coll.Name, coll.Id_collection)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
@@ -68,8 +57,8 @@ export default {
             console.log(error.message)
           })
       },
-      moveTo(collectionName) {
-        this.$router.push({ name: 'ManageCollection', params: { collName: collectionName } })
+      moveTo(collectionName, collectionId) {
+        this.$router.push({ name: 'ManageCollection', params: { collName: collectionName, collId: collectionId } })
       }
   },
   components: {
