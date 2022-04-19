@@ -55,8 +55,6 @@
         formData['first_name'] = "";
         formData['email'] = this.email;
         formData['password'] = this.encrypt(this.password);
-        
-        console.log(formData)
 
         axios.post("http://localhost:5085/api/" + "User/login", formData).then((response)=>{
           console.log(response.data);
