@@ -47,11 +47,12 @@ namespace Flashcards.Models {
             var result = await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == flashcard.Id_collection);
 
             if (result != null) {
-                result.Id_flashcard = flashcard.Id_flashcard;
-                result.Id_collection = flashcard.Id_collection;
-                result.Answer = flashcard.Answer;
-                result.Question = flashcard.Question;
+                //result.Id_flashcard = flashcard.Id_flashcard;
+                //result.Id_collection = flashcard.Id_collection;
+                //result.Answer = flashcard.Answer;
+                //result.Question = flashcard.Question;
 
+                _context.Entry(result).CurrentValues.SetValues(flashcard);
                 await _context.SaveChangesAsync();
 
                 return result;

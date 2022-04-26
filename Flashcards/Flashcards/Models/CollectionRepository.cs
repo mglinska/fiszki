@@ -48,11 +48,12 @@ namespace Flashcards.Models {
             var result = await _context.Collection.FirstOrDefaultAsync(c => c.Id_collection == collection.Id_collection);
 
             if (result != null) {
-                result.Id_collection = collection.Id_collection;
-                result.Name = collection.Name;
-                result.Created_on = collection.Created_on;
-                result.Description = collection.Description;
+                //result.Id_collection = collection.Id_collection;
+                //result.Name = collection.Name;
+                //result.Created_on = collection.Created_on;
+                //result.Description = collection.Description;
 
+                _context.Entry(result).CurrentValues.SetValues(collection);
                 await _context.SaveChangesAsync();
 
                 return result;
