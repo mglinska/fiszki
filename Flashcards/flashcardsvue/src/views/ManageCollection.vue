@@ -4,6 +4,7 @@
     </div>
     <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
     <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
+    <FlashcardEdit v-if="this.status === 2" v-model:status="status" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
     <div id="flashcard_container">
       <v-responsive>
         <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
@@ -20,7 +21,7 @@
               <v-col align="center">
                 <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
                 </v-btn>
-                <v-btn icon="mdi-pencil" variant="outlined" class="action_edit">
+                <v-btn @click="this.status = 2; this.fc_id = fc.Id_flashcard;" icon="mdi-pencil" variant="outlined" class="action_edit">
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -33,6 +34,7 @@
 
 <script>
 import FlashcardAdd from '../components/FlashcardAdd.vue'
+import FlashcardEdit from '../components/FlashcardEdit.vue'
 import axios from 'axios'
 export default {
     props: {
@@ -63,17 +65,20 @@ export default {
         flashcards: [],
         status: 0,
         coll_id: this.collId,
+        fc_id: null
       }
     },
     components: {
       FlashcardAdd,
+      FlashcardEdit,
     },
     methods: {
       refreshData() {
         // musi byc po id kolekcji wyswietlanie fiszek
         axios
-          .get("http://localhost:5085/api/" + "Flashcard")
+          .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
           .then( (response)=>{
+            console.log(response.data)
             this.flashcards = response.data;
           })
           .catch( function(error) { 
