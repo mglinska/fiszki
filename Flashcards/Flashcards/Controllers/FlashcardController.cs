@@ -33,9 +33,9 @@ namespace Flashcards.Controllers {
 
         // --- Pobranie fiszki po id kolekcji
         [HttpGet("get-by-collection/{collectionId:int}")]
-        public async Task<ActionResult<Flashcard>> GetFlashcardByCollectionId( int collectionId ) {
+        public async Task<ActionResult<List<Flashcard>>> GetFlashcardByCollectionId( int collectionId ) {
             try {
-                return Ok(await _flashcardRepository.GetFlashcardByCollectionId(collectionId));
+                return Ok(await _flashcardRepository.GetFlashcardsByCollectionId(collectionId));
             } catch (Exception ex) {
                 return BadRequest(ex.InnerException.Message);
             }
