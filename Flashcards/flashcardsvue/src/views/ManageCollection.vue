@@ -18,7 +18,7 @@
           <div class="fc_actions">
             <v-card-actions>
               <v-col align="center">
-                <v-btn icon="mdi-trash-can" variant="outlined" class="action_delete">
+                <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
                 </v-btn>
                 <v-btn icon="mdi-pencil" variant="outlined" class="action_edit">
                 </v-btn>
@@ -80,10 +80,18 @@ export default {
             console.log(error.message)
           })
       },
-      deleteCollection() {
-        if( !(confirm("Are you sure you want to delete this user?")) ) {
+      deleteFlashcard(id) {
+        if( !(confirm("Are you sure you want to delete this flashcard?")) ) {
           return;
         }
+
+        axios.delete("http://localhost:5085/api/" + "Flashcard/" + id)
+          .then( ()=> {
+            this.refreshData();
+          })
+          .catch(function(error) { 
+            console.log(error.message)
+          })
       },
     },
     mounted: function() {

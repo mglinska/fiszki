@@ -45,7 +45,7 @@ export default {
           })
       },
       deleteCollection(id) {
-        if( !(confirm("Are you sure you want to delete this user?")) ) {
+        if( !(confirm("Are you sure you want to delete this collection?")) ) {
           return;
         }
 
