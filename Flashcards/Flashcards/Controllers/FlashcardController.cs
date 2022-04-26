@@ -31,6 +31,16 @@ namespace Flashcards.Controllers {
             }
         }
 
+        // --- Pobranie fiszki po id kolekcji
+        [HttpGet("get-by-collection/{collectionId:int}")]
+        public async Task<ActionResult<Flashcard>> GetFlashcardByCollectionId( int collectionId ) {
+            try {
+                return Ok(await _flashcardRepository.GetFlashcardByCollectionId(collectionId));
+            } catch (Exception ex) {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
         // --- Utworzenie nowej fiszki
         [HttpPost("{userId:int}")]
         public async Task<ActionResult<Flashcard>> CreateFlashcard( Flashcard flashcard, int userId ) {

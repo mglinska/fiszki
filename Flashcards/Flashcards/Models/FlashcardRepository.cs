@@ -15,7 +15,11 @@ namespace Flashcards.Models {
         }
 
         public async Task<Flashcard> GetFlashcardById( int flashcardId ) {
-            return await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == flashcardId);
+            return await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_flashcard == flashcardId);
+        }
+        
+        public async Task<Flashcard> GetFlashcardByCollectionId( int collectionId ) {
+            return await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == collectionId);
         }
 
         public async Task<Flashcard> CreateFlashcard( Flashcard flashcard, int userId ) {
