@@ -10,18 +10,7 @@
         </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo(coll.Name)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
-          <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-
-      <v-expansion-panel>
-        <v-expansion-panel-title color="green" hide-actions="True">
-           <h3>Angielski</h3>
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo('Angielski')" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
+          <v-btn @click="moveTo(coll.Name, coll.Id_collection)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
@@ -46,7 +35,7 @@ export default {
   methods: {
       refreshData() {
         axios
-          .get("http://localhost:5085/api/" + "Collection")
+          .get("http://localhost:5085/api/" + "CollectionUser/" + sessionStorage.getItem('user_id'))
           .then( (response)=>{
             this.collections = response.data;
             console.log(response.data)
@@ -56,7 +45,7 @@ export default {
           })
       },
       deleteCollection(id) {
-        if( !(confirm("Are you sure you want to delete this user?")) ) {
+        if( !(confirm("Are you sure you want to delete this collection?")) ) {
           return;
         }
 
@@ -68,8 +57,8 @@ export default {
             console.log(error.message)
           })
       },
-      moveTo(collectionName) {
-        this.$router.push({ name: 'ManageCollection', params: { collName: collectionName } })
+      moveTo(collectionName, collectionId) {
+        this.$router.push({ name: 'ManageCollection', params: { collName: collectionName, collId: collectionId } })
       }
   },
   components: {

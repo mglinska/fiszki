@@ -15,7 +15,11 @@ namespace Flashcards.Models {
         }
 
         public async Task<Flashcard> GetFlashcardById( int flashcardId ) {
-            return await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == flashcardId);
+            return await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_flashcard == flashcardId);
+        }
+        
+        public async Task<List<Flashcard>> GetFlashcardsByCollectionId( int collectionId ) {
+            return await _context.Flashcard.Where(c => c.Id_collection == collectionId).ToListAsync();
         }
 
         public async Task<Flashcard> CreateFlashcard( Flashcard flashcard, int userId ) {
@@ -43,11 +47,12 @@ namespace Flashcards.Models {
             var result = await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == flashcard.Id_collection);
 
             if (result != null) {
-                result.Id_flashcard = flashcard.Id_flashcard;
-                result.Id_collection = flashcard.Id_collection;
-                result.Answer = flashcard.Answer;
-                result.Question = flashcard.Question;
+                //result.Id_flashcard = flashcard.Id_flashcard;
+                //result.Id_collection = flashcard.Id_collection;
+                //result.Answer = flashcard.Answer;
+                //result.Question = flashcard.Question;
 
+                _context.Entry(result).CurrentValues.SetValues(flashcard);
                 await _context.SaveChangesAsync();
 
                 return result;

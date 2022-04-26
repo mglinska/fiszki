@@ -89,7 +89,7 @@
     methods: {
       submit() {
         const formData = {};
-        formData['name'] = this.name;
+        formData['first_name'] = this.name;
         formData['email'] = this.email;
         formData['password'] = this.encrypt(this.password);
         

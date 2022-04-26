@@ -32,11 +32,12 @@ namespace Flashcards.Models {
             var result = await _context.User.FirstOrDefaultAsync(u => u.Id_user == user.Id_user);
 
             if (result != null) {
-                result.Email = user.Email;
-                result.Password = user.Password;
-                result.First_name = user.First_name;
-                result.Is_admin = user.Is_admin;
+                //result.Email = user.Email;
+                //result.Password = user.Password;
+                //result.First_name = user.First_name;
+                //result.Is_admin = user.Is_admin;
 
+                _context.Entry(result).CurrentValues.SetValues(user);
                 await _context.SaveChangesAsync();
 
                 return result;

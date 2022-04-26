@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlashcardUserContorller : ControllerBase {
+    public class FlashcardUserController : ControllerBase {
         private readonly IFlashcardUserRepository _flashcardUserRepository;
 
-        public FlashcardUserContorller( IFlashcardUserRepository flashcardUserRepository ) {
+        public FlashcardUserController( IFlashcardUserRepository flashcardUserRepository ) {
             _flashcardUserRepository = flashcardUserRepository;
         }
 

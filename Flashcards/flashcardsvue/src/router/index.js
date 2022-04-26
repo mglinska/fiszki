@@ -40,7 +40,7 @@ const routes = [
         component: NotFound
     },
     {
-        path: '/collections/:collName',
+        path: '/collections/:collName-:collId',
         name: 'ManageCollection',
         component: ManageCollection,
         props: true

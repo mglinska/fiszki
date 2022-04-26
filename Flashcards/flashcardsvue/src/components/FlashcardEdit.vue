@@ -1,7 +1,7 @@
 <template>
-    <h1 style="margin: 30px;">Dodaj Fiszkę</h1>
+    <h1 style="margin: 30px;">Edytuj Fiszkę</h1>
 
-    <v-btn :value="status" @click="$emit('update:status', 0)" class="label" variant="contained-text" color="white">Wróć</v-btn>
+    <v-btn :value="status" @click="$emit('update:status', 0); $emit('update:fc_id', null)" class="label" variant="contained-text" color="white">Wróć</v-btn>
     
     <v-form 
     id="add_fc_form"
@@ -27,7 +27,7 @@
       class="mr-4"
       @click="validate"
     >
-      Dodaj!
+      Zapisz!
     </v-btn>
 
   </v-form>
@@ -37,8 +37,8 @@
 import axios from 'axios'
 
 export default {
-  props: ['status', 'coll_id'],
-  emits: ['update:status'],
+  props: ['status', 'coll_id' , 'fc_id'],
+  emits: ['update:status', 'update:fc_id'],
   data: () => ({
       awers: '',
       awersRules: [
@@ -53,14 +53,17 @@ export default {
       submit() {
 
         const formData = {};
-        console.log(this.coll_id)
-    
+
+        formData['id_flashcard'] = this.fc_id;
         formData['id_collection'] = this.coll_id;
         formData['question'] = this.awers;
         formData['answer'] = this.rewers;
-        
-        axios.post("http://localhost:5085/api/" + "Flashcard/" + sessionStorage.getItem('user_id'), formData).then(()=>{
+
+        console.log(formData)
+
+        axios.put("http://localhost:5085/api/" + "Flashcard", formData).then(()=>{
           this.$emit('update:status', 0);
+          this.$emit('update:fc_id', null);
           this.$parent.refreshData();
         }).catch((error) => {
           console.log(error.response)

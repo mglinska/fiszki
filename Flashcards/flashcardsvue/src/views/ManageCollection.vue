@@ -3,7 +3,8 @@
         <h1> {{ collName }} </h1>
     </div>
     <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
-    <FlashcardAdd v-if="this.status === 1" v-model:status="status"/>
+    <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
+    <FlashcardEdit v-if="this.status === 2" v-model:status="status" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
     <div id="flashcard_container">
       <v-responsive>
         <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
@@ -18,9 +19,9 @@
           <div class="fc_actions">
             <v-card-actions>
               <v-col align="center">
-                <v-btn icon="mdi-trash-can" variant="outlined" class="action_delete">
+                <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
                 </v-btn>
-                <v-btn icon="mdi-pencil" variant="outlined" class="action_edit">
+                <v-btn @click="this.status = 2; this.fc_id = fc.Id_flashcard;" icon="mdi-pencil" variant="outlined" class="action_edit">
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -33,9 +34,14 @@
 
 <script>
 import FlashcardAdd from '../components/FlashcardAdd.vue'
+import FlashcardEdit from '../components/FlashcardEdit.vue'
 import axios from 'axios'
 export default {
-    props: ['collName'],
+    props: {
+      collName: String,
+      collId: Number,
+  },
+    
     data() {
       return {
         /*
@@ -58,27 +64,39 @@ export default {
 
         flashcards: [],
         status: 0,
+        coll_id: this.collId,
+        fc_id: null
       }
     },
     components: {
       FlashcardAdd,
+      FlashcardEdit,
     },
     methods: {
       refreshData() {
+        // musi byc po id kolekcji wyswietlanie fiszek
         axios
-          .get("http://localhost:5085/api/" + "Flashcard")
+          .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
           .then( (response)=>{
-            this.flashcards = response.data;
             console.log(response.data)
+            this.flashcards = response.data;
           })
           .catch( function(error) { 
             console.log(error.message)
           })
       },
-      deleteCollection() {
-        if( !(confirm("Are you sure you want to delete this user?")) ) {
+      deleteFlashcard(id) {
+        if( !(confirm("Are you sure you want to delete this flashcard?")) ) {
           return;
         }
+
+        axios.delete("http://localhost:5085/api/" + "Flashcard/" + id)
+          .then( ()=> {
+            this.refreshData();
+          })
+          .catch(function(error) { 
+            console.log(error.message)
+          })
       },
     },
     mounted: function() {

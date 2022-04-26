@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlashcardContorller : ControllerBase {
+    public class FlashcardController : ControllerBase {
         private readonly IFlashcardRepository _flashcardRepository;
 
-        public FlashcardContorller( IFlashcardRepository flashcardRepository ) {
+        public FlashcardController( IFlashcardRepository flashcardRepository ) {
             _flashcardRepository = flashcardRepository;
         }
 
@@ -31,8 +31,18 @@ namespace Flashcards.Controllers {
             }
         }
 
+        // --- Pobranie fiszki po id kolekcji
+        [HttpGet("get-by-collection/{collectionId:int}")]
+        public async Task<ActionResult<List<Flashcard>>> GetFlashcardByCollectionId( int collectionId ) {
+            try {
+                return Ok(await _flashcardRepository.GetFlashcardsByCollectionId(collectionId));
+            } catch (Exception ex) {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+
         // --- Utworzenie nowej fiszki
-        [HttpPost]
+        [HttpPost("{userId:int}")]
         public async Task<ActionResult<Flashcard>> CreateFlashcard( Flashcard flashcard, int userId ) {
             try {
                 return Ok(await _flashcardRepository.CreateFlashcard(flashcard, userId));

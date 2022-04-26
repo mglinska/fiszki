@@ -60,7 +60,7 @@ export default {
         formData['name'] = this.name;
         formData['description'] = this.description;
         
-        axios.post("http://localhost:5085/api/" + "Collection/5", formData).then(()=>{
+        axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
           this.$emit('update:status', 0);
           this.$parent.refreshData();
           alert("Poprawnie dodano nową kolekcję");

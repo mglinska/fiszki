@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class CollectionUserContorller : ControllerBase {
+    public class CollectionUserController : ControllerBase {
         private readonly ICollectionUserRepository _collectionUserRepository;
 
-        public CollectionUserContorller( ICollectionUserRepository collectionUserRepository ) {
+        public CollectionUserController( ICollectionUserRepository collectionUserRepository ) {
             _collectionUserRepository = collectionUserRepository;
         }
 
