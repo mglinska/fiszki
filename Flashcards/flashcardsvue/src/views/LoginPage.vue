@@ -58,12 +58,24 @@
 
         axios.post("http://localhost:5085/api/" + "User/login", formData).then((response)=>{
           console.log(response.data);
+          let zmienna = response.data;
+          sessionStorage.setItem('user_id', zmienna.Id_user);
+          console.log(sessionStorage)
+          // axios.get("http://localhost:5085/api/" + "User/check-logged-user")
+          //   .then((response)=>{
+          //     console.log(response.data);
+          //     sessionStorage.setItem('user', response.data);
+          //     console.log(sessionStorage); 
+          //   })
+          //   .catch( function(error) { 
+          //     console.log(error.message)
+          //   })
+
           this.$router.push({ name: 'Home'});
           alert("the form has been sent");
         }).catch((error) => {
           console.log(error.response)
         })
-        
       },
       encrypt(password) {
         const CryptoJS = require('crypto-js');

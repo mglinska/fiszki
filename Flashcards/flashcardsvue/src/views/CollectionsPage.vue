@@ -35,7 +35,7 @@ export default {
   methods: {
       refreshData() {
         axios
-          .get("http://localhost:5085/api/" + "Collection")
+          .get("http://localhost:5085/api/" + "CollectionUser/" + sessionStorage.getItem('user_id'))
           .then( (response)=>{
             this.collections = response.data;
             console.log(response.data)

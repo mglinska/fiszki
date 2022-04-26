@@ -84,4 +84,4 @@ export default {
   margin: 10px;
   width: 20%;
 }
-</style>
+</style> 
