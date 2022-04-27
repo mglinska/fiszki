@@ -1,9 +1,11 @@
 <template>
+<Navbar />
  <v-form 
     id=reg_form
     ref="form"
     v-model="valid"
     lazy-validation
+    v-on:submit.prevent="validate"
   >
     <v-text-field
       v-model="name"
@@ -11,6 +13,7 @@
       :rules="nameRules"
       label="Name"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
     <v-text-field
@@ -18,6 +21,7 @@
       :rules="emailRules"
       label="E-mail"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
      <v-text-field
@@ -26,6 +30,7 @@
       :type="password"
       label="Password"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
      <v-text-field
@@ -34,6 +39,7 @@
       :type="password"
       label="Repeat password"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
     <v-checkbox
@@ -41,6 +47,7 @@
       :rules="[v => !!v || 'You must agree to continue!']"
       label="I have read and accept the regulations"
       required
+      v-on:keyup.enter="validate"
     ></v-checkbox>
 
     <v-btn
@@ -56,6 +63,8 @@
 
 <script>
   import axios from 'axios'
+  import Navbar from '../components/NavBar.vue'
+
   export default {
     data: () => ({
       name: '',
@@ -114,7 +123,10 @@
         });
       },
     },
+    components: {
+      Navbar
   }
+}
 </script>
 
 

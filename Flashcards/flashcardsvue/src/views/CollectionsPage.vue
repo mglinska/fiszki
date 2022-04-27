@@ -1,4 +1,5 @@
 <template>
+   <Navbar />
   <DefultContent v-if="this.status === 0" v-model:status="status"/>
   <AddContent v-else-if="this.status === 1" v-model:status="status"/>
   <div style="height: 10px;"></div>
@@ -23,6 +24,7 @@
 import axios from 'axios'
 import DefultContent from '../components/CollDefultContent.vue'
 import AddContent from '../components/CollAddContent.vue'
+import Navbar from '../components/NavBar.vue'
 
 export default {
   data() {
@@ -64,6 +66,7 @@ export default {
   components: {
     DefultContent,
     AddContent,
+    Navbar,
   },
   mounted: function() {
       this.refreshData();

@@ -1,8 +1,11 @@
 <template>
-    <div id="temp">
+    <Navbar />
+    <div id="coll_title">
         <h1> {{ collName }} </h1>
     </div>
+    <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green"></v-btn>
     <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
+    
     <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
     <FlashcardEdit v-if="this.status === 2" v-model:status="status" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
     <div id="flashcard_container">
@@ -35,6 +38,7 @@
 <script>
 import FlashcardAdd from '../components/FlashcardAdd.vue'
 import FlashcardEdit from '../components/FlashcardEdit.vue'
+import Navbar from '../components/NavBar.vue'
 import axios from 'axios'
 export default {
     props: {
@@ -71,6 +75,7 @@ export default {
     components: {
       FlashcardAdd,
       FlashcardEdit,
+      Navbar,
     },
     methods: {
       refreshData() {
@@ -107,7 +112,7 @@ export default {
 
 <style scoped>
 
-#temp {
+#coll_title {
     margin: auto;
     text-align: center;
 }
