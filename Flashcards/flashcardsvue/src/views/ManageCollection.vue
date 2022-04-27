@@ -1,10 +1,13 @@
 <template>
-    <div id="temp">
+    <Navbar />
+    <div id="coll_title">
         <h1> {{ collName }} </h1>
     </div>
-    <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
-    <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
-    <FlashcardEdit v-if="this.status === 2" v-model:status="status" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
+    <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px;"></v-btn> 
+    <br>
+    <br>
+    <v-btn @click="overlay1 = !overlay1" class="label" variant="contained-text" color="white" style="margin-left: 35px;">Utwórz fiszkę</v-btn>
+
     <div id="flashcard_container">
       <v-responsive>
         <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
@@ -21,7 +24,7 @@
               <v-col align="center">
                 <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
                 </v-btn>
-                <v-btn @click="this.status = 2; this.fc_id = fc.Id_flashcard;" icon="mdi-pencil" variant="outlined" class="action_edit">
+                <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard;" icon="mdi-pencil" variant="outlined" class="action_edit">
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -30,11 +33,19 @@
         </v-card>
       </v-responsive>
     </div>
+
+    <v-overlay v-model="overlay1" class="align-center justify-center">
+      <FlashcardAdd @refresh="refresh" v-model:overlay="overlay1" v-model:coll_id="coll_id"/>
+    </v-overlay>
+    <v-overlay v-model="overlay2" class="align-center justify-center">
+      <FlashcardEdit @refresh="refresh" v-model:overlay="overlay2" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
+    </v-overlay>
 </template>
 
 <script>
 import FlashcardAdd from '../components/FlashcardAdd.vue'
 import FlashcardEdit from '../components/FlashcardEdit.vue'
+import Navbar from '../components/NavBar.vue'
 import axios from 'axios'
 export default {
     props: {
@@ -63,18 +74,19 @@ export default {
         ], */
 
         flashcards: [],
-        status: 0,
         coll_id: this.collId,
-        fc_id: null
+        fc_id: null,
+        overlay1: false,
+        overlay2: false,
       }
     },
     components: {
       FlashcardAdd,
       FlashcardEdit,
+      Navbar,
     },
     methods: {
       refreshData() {
-        // musi byc po id kolekcji wyswietlanie fiszek
         axios
           .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
           .then( (response)=>{
@@ -98,6 +110,9 @@ export default {
             console.log(error.message)
           })
       },
+      refresh() {
+      this.refreshData()
+      }
     },
     mounted: function() {
       this.refreshData();
@@ -107,7 +122,7 @@ export default {
 
 <style scoped>
 
-#temp {
+#coll_title {
     margin: auto;
     text-align: center;
 }
@@ -147,8 +162,9 @@ export default {
   display: default;
 }
 
-
-
-
-
+.label{
+        background-color: green;
+        display: block;
+        margin: 10px;
+    }
 </style>

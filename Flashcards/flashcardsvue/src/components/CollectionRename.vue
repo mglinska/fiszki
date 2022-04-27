@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <h1 style="margin: 30px;">Dodaj kolekcje</h1>
+    <h1 style="margin: 30px;">Zmień nazwę kolekcji</h1>
     <v-form 
     id="add_coll_form"
     ref="form"
@@ -14,21 +14,15 @@
       required
     ></v-text-field>
 
-     <v-text-field
-      v-model="description"
-      :rules="descriptionRules"
-      label="Opis"
-    ></v-text-field>
-
     <v-btn
       color="success"
       class="mr-4"
       @click="validate"
     >
-      Dodaj!
+      Zatwierdź zmianę!
     </v-btn>
 
-    </v-form>
+  </v-form>
   </div>
 </template>
 
@@ -36,8 +30,8 @@
 import axios from 'axios'
 
 export default {
-  props: ['status'],
-  emits: ['update:status'],
+  props: ['overlay', 'coll_id'],
+  emits: ['update:overlay'],
   data: () => ({
       name: '',
       nameRules: [
@@ -45,23 +39,18 @@ export default {
         v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
         v => (v && v.length <= 50) || 'Nazwa kolekcji musi mieć mniej niż 50 znaki'
       ],
-      description: '',
-      descriptionRules: [
-        v => (v.length <= 255) || 'Opis kolekcji musi mieć mniej niż 255 znaków',
-      ],
-      user: []
     }),
     methods: {
       submit() {
         
         const formData = {};
         
+        formData['id_collection'] = this.coll_id;
         formData['name'] = this.name;
-        formData['description'] = this.description;
-
-        console.log(formData)
+        formData['description'] = "abc";
+        console.log(formData);
         
-        axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
+        axios.put("http://localhost:5085/api/" + "Collection", formData).then(()=>{
           this.$emit('update:overlay', false);
           this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
@@ -82,13 +71,9 @@ export default {
 </script>
 
 <style scoped>
-#add_fc_form {
-  margin: 10px;
-}
-
 #background {
   background-color: aliceblue;
   padding: 30px;
   border-radius: 10px;
 }
-</style> 
+</style>

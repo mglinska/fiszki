@@ -1,44 +1,43 @@
 <template>
+  <div id="background">
     <h1 style="margin: 30px;">Dodaj Fiszkę</h1>
-
-    <v-btn :value="status" @click="$emit('update:status', 0)" class="label" variant="contained-text" color="white">Wróć</v-btn>
-    
-    <v-form 
-    id="add_fc_form"
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="awers"
-      :rules="awersRules"
-      label="Awers"
-      required
-    ></v-text-field>
-
-     <v-text-field
-      v-model="rewers"
-      :rules="rewersRules"
-      label="Rewers"
-    ></v-text-field>
-
-    <v-btn
-      color="success"
-      class="mr-4"
-      @click="validate"
+      <v-form 
+      id="add_fc_form"
+      ref="form"
+      v-model="valid"
+      lazy-validation
     >
-      Dodaj!
-    </v-btn>
+      <v-text-field
+        v-model="awers"
+        :rules="awersRules"
+        label="Awers"
+        required
+      ></v-text-field>
 
-  </v-form>
+      <v-text-field
+        v-model="rewers"
+        :rules="rewersRules"
+        label="Rewers"
+      ></v-text-field>
+
+      <v-btn
+        color="success"
+        class="mr-4"
+        @click="validate"
+      >
+        Dodaj!
+      </v-btn>
+
+    </v-form>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
-  props: ['status', 'coll_id'],
-  emits: ['update:status'],
+  props: ['overlay', 'coll_id'],
+  emits: ['update:overlay'],
   data: () => ({
       awers: '',
       awersRules: [
@@ -60,8 +59,8 @@ export default {
         formData['answer'] = this.rewers;
         
         axios.post("http://localhost:5085/api/" + "Flashcard/" + sessionStorage.getItem('user_id'), formData).then(()=>{
-          this.$emit('update:status', 0);
-          this.$parent.refreshData();
+          this.$emit('update:overlay', false);
+          this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
           console.log(error.response)
         })
@@ -83,6 +82,11 @@ export default {
 <style scoped>
 #add_fc_form {
   margin: 10px;
-  width: 20%;
+}
+
+#background {
+  background-color: aliceblue;
+  padding: 30px;
+  border-radius: 10px;
 }
 </style> 

@@ -1,5 +1,8 @@
 <template>
+ <Navbar />
+ <h1 style="margin: 35px;">Login</h1>
  <v-form 
+    v-on:submit.prevent="validate"
     id=log_form
     ref="form"
     v-model="valid"
@@ -10,6 +13,7 @@
       :rules="emailRules"
       label="E-mail"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
      <v-text-field
@@ -18,6 +22,7 @@
       :type="password"
       label="Password"
       required
+      v-on:keyup.enter="validate"
     ></v-text-field>
 
     <v-btn
@@ -33,6 +38,7 @@
 
 <script>
   import axios from 'axios'
+  import Navbar from '../components/NavBar.vue'
   export default {
     data: () => ({
       email: '',
@@ -60,19 +66,7 @@
           console.log(response.data);
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
-          console.log(sessionStorage)
-          // axios.get("http://localhost:5085/api/" + "User/check-logged-user")
-          //   .then((response)=>{
-          //     console.log(response.data);
-          //     sessionStorage.setItem('user', response.data);
-          //     console.log(sessionStorage); 
-          //   })
-          //   .catch( function(error) { 
-          //     console.log(error.message)
-          //   })
-
           this.$router.push({ name: 'Home'});
-          alert("the form has been sent");
         }).catch((error) => {
           console.log(error.response)
         })
@@ -91,6 +85,9 @@
         });
       },
     },
+    components: {
+      Navbar
+    }
   }
 </script>
 
