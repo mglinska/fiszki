@@ -5,7 +5,7 @@
     </div>
     <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green"></v-btn>
     <v-btn v-if="this.status === 0" @click="this.status = 1" variant="contained-text" color="green">Utwórz fiszkę</v-btn>
-    
+
     <FlashcardAdd v-if="this.status === 1" v-model:status="status" v-model:coll_id="coll_id"/>
     <FlashcardEdit v-if="this.status === 2" v-model:status="status" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
     <div id="flashcard_container">
@@ -69,7 +69,8 @@ export default {
         flashcards: [],
         status: 0,
         coll_id: this.collId,
-        fc_id: null
+        fc_id: null,
+        overlay: false,
       }
     },
     components: {

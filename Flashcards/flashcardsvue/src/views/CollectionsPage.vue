@@ -1,5 +1,5 @@
 <template>
-   <Navbar />
+  <Navbar />
   <DefultContent v-if="this.status === 0" v-model:status="status"/>
   <AddContent v-else-if="this.status === 1" v-model:status="status"/>
   <div style="height: 10px;"></div>
@@ -13,10 +13,15 @@
           <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
           <v-btn @click="moveTo(coll.Name, coll.Id_collection)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
+          <v-btn @click="overlay = !overlay" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
       
     </v-expansion-panels>
+      <v-overlay v-model="overlay" class="align-center justify-center">
+        <CollectionRename v-model:coll_id="coll_id"/>
+      </v-overlay>
+
 
 </template>
 
@@ -25,6 +30,7 @@ import axios from 'axios'
 import DefultContent from '../components/CollDefultContent.vue'
 import AddContent from '../components/CollAddContent.vue'
 import Navbar from '../components/NavBar.vue'
+import CollectionRename from '../components/CollectionRename.vue'
 
 export default {
   data() {
@@ -32,6 +38,7 @@ export default {
       title: 'Collections',
       status: 0,
       collections: [],
+      overlay: false,
     }
   },
   methods: {
@@ -67,6 +74,7 @@ export default {
     DefultContent,
     AddContent,
     Navbar,
+    CollectionRename,
   },
   mounted: function() {
       this.refreshData();
