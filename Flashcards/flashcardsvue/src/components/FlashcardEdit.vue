@@ -1,8 +1,6 @@
 <template>
+  <div id="background">
     <h1 style="margin: 30px;">Edytuj Fiszkę</h1>
-
-    <v-btn :value="status" @click="$emit('update:status', 0); $emit('update:fc_id', null)" class="label" variant="contained-text" color="white">Wróć</v-btn>
-    
     <v-form 
     id="add_fc_form"
     ref="form"
@@ -29,16 +27,16 @@
     >
       Zapisz!
     </v-btn>
-
   </v-form>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
-  props: ['status', 'coll_id' , 'fc_id'],
-  emits: ['update:status', 'update:fc_id'],
+  props: ['overlay', 'coll_id' , 'fc_id'],
+  emits: ['update:overlay', 'update:fc_id'],
   data: () => ({
       awers: '',
       awersRules: [
@@ -62,8 +60,9 @@ export default {
         console.log(formData)
 
         axios.put("http://localhost:5085/api/" + "Flashcard", formData).then(()=>{
-          this.$emit('update:status', 0);
+          this.$emit('update:overlay', false);
           this.$emit('update:fc_id', null);
+          this.$emit("refresh", "cokolwiek");
           this.$parent.refreshData();
         }).catch((error) => {
           console.log(error.response)
@@ -86,6 +85,11 @@ export default {
 <style scoped>
 #add_fc_form {
   margin: 10px;
-  width: 20%;
+}
+
+#background {
+  background-color: aliceblue;
+  padding: 30px;
+  border-radius: 10px;
 }
 </style> 

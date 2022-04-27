@@ -13,13 +13,13 @@
           <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
           <v-btn @click="moveTo(coll.Name, coll.Id_collection)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-          <v-btn @click="overlay = !overlay" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
+          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
       
     </v-expansion-panels>
       <v-overlay v-model="overlay" class="align-center justify-center">
-        <CollectionRename v-model:coll_id="coll_id"/>
+        <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id"/>
       </v-overlay>
 
 
@@ -39,6 +39,7 @@ export default {
       status: 0,
       collections: [],
       overlay: false,
+      temp_id: null
     }
   },
   methods: {
@@ -68,7 +69,10 @@ export default {
       },
       moveTo(collectionName, collectionId) {
         this.$router.push({ name: 'ManageCollection', params: { collName: collectionName, collId: collectionId } })
-      }
+      },
+      refresh() {
+      this.refreshData()
+    },
   },
   components: {
     DefultContent,

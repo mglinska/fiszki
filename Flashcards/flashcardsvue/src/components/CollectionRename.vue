@@ -1,6 +1,6 @@
 <template>
+  <div id="background">
     <h1 style="margin: 30px;">Zmień nazwę kolekcji</h1>
-    
     <v-form 
     id="add_coll_form"
     ref="form"
@@ -23,13 +23,15 @@
     </v-btn>
 
   </v-form>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
-  props: ['coll_id'],
+  props: ['overlay', 'coll_id'],
+  emits: ['update:overlay'],
   data: () => ({
       name: '',
       nameRules: [
@@ -49,9 +51,8 @@ export default {
         console.log(formData);
         
         axios.put("http://localhost:5085/api/" + "Collection", formData).then(()=>{
-          this.$emit('update:status', 0);
-          this.$parent.refreshData();
-          alert("Poprawnie dodano nową kolekcję");
+          this.$emit('update:overlay', false);
+          this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
           console.log(error.response)
         })
@@ -68,3 +69,11 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+#background {
+  background-color: aliceblue;
+  padding: 30px;
+  border-radius: 10px;
+}
+</style>
