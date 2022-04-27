@@ -1,7 +1,8 @@
 <template>
   <Navbar />
-  <DefultContent v-if="this.status === 0" v-model:status="status"/>
-  <AddContent v-else-if="this.status === 1" v-model:status="status"/>
+  <h1 style="margin: 35px;">Kolekcje</h1>
+  <v-btn @click="overlay2 = !overlay2" class="label" variant="contained-text" color="white">Dodaj kolekcje</v-btn>
+
   <div style="height: 10px;"></div>
     <v-expansion-panels  id="collections">
 
@@ -21,13 +22,13 @@
       <v-overlay v-model="overlay" class="align-center justify-center">
         <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id"/>
       </v-overlay>
-
-
+      <v-overlay v-model="overlay2" class="align-center justify-center">
+        <AddContent @refresh="refresh" v-model:overlay="overlay2" />
+      </v-overlay>
 </template>
 
 <script>
 import axios from 'axios'
-import DefultContent from '../components/CollDefultContent.vue'
 import AddContent from '../components/CollAddContent.vue'
 import Navbar from '../components/NavBar.vue'
 import CollectionRename from '../components/CollectionRename.vue'
@@ -39,13 +40,14 @@ export default {
       status: 0,
       collections: [],
       overlay: false,
+      overlay2: false,
       temp_id: null
     }
   },
   methods: {
       refreshData() {
-        axios
-          .get("http://localhost:5085/api/" + "CollectionUser/" + sessionStorage.getItem('user_id'))
+        let zmienna = sessionStorage.getItem('user_id') == null ? -1 : sessionStorage.getItem('user_id')
+        axios.get("http://localhost:5085/api/" + "CollectionUser/" + zmienna)
           .then( (response)=>{
             this.collections = response.data;
             console.log(response.data)
@@ -75,7 +77,6 @@ export default {
     },
   },
   components: {
-    DefultContent,
     AddContent,
     Navbar,
     CollectionRename,
@@ -86,21 +87,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .label{
         background-color: green;
         display: block;
         margin: 10px;
+        margin-left: 35px;
     }
 
     #collections{
       width: 20%;
-      margin-left: 10px;
+      margin-left: 35px;
     }
 
     .coll:hover{
       cursor: pointer;
     }
-
 
 </style>

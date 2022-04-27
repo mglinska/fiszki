@@ -1,8 +1,6 @@
 <template>
+  <div id="background">
     <h1 style="margin: 30px;">Dodaj kolekcje</h1>
-
-    <v-btn :value="status" @click="$emit('update:status', 0)" class="label" variant="contained-text" color="white">Wróć</v-btn>
-    
     <v-form 
     id="add_coll_form"
     ref="form"
@@ -30,7 +28,8 @@
       Dodaj!
     </v-btn>
 
-  </v-form>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -59,11 +58,12 @@ export default {
         
         formData['name'] = this.name;
         formData['description'] = this.description;
+
+        console.log(formData)
         
         axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
-          this.$emit('update:status', 0);
-          this.$parent.refreshData();
-          alert("Poprawnie dodano nową kolekcję");
+          this.$emit('update:overlay', false);
+          this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
           console.log(error.response)
         })
@@ -80,3 +80,15 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+#add_fc_form {
+  margin: 10px;
+}
+
+#background {
+  background-color: aliceblue;
+  padding: 30px;
+  border-radius: 10px;
+}
+</style> 

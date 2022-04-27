@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <h1 style="margin: 30px;">Hello {{ user.First_name }}</h1>
+  <h1 style="margin: 35px;">Hello {{ user.First_name }}</h1>
 </template>
 
 <script>

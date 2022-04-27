@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <h1 style="margin: 30px;">About us</h1>
+  <h1 style="margin: 35px;">About us</h1>
 </template>
 
 <script>

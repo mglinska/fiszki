@@ -1,5 +1,6 @@
 <template>
  <Navbar />
+ <h1 style="margin: 35px;">Login</h1>
  <v-form 
     v-on:submit.prevent="validate"
     id=log_form

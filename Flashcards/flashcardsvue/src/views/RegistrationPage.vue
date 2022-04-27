@@ -1,5 +1,6 @@
 <template>
 <Navbar />
+<h1 style="margin: 35px;">Register</h1>
  <v-form 
     id=reg_form
     ref="form"

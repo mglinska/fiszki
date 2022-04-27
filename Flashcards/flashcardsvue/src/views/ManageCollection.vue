@@ -6,7 +6,7 @@
     <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px;"></v-btn> 
     <br>
     <br>
-    <v-btn @click="overlay1 = !overlay1" variant="contained-text" color="green" style="margin-left: 35px;">Utwórz fiszkę</v-btn>
+    <v-btn @click="overlay1 = !overlay1" class="label" variant="contained-text" color="white" style="margin-left: 35px;">Utwórz fiszkę</v-btn>
 
     <div id="flashcard_container">
       <v-responsive>
@@ -162,8 +162,9 @@ export default {
   display: default;
 }
 
-
-
-
-
+.label{
+        background-color: green;
+        display: block;
+        margin: 10px;
+    }
 </style>
