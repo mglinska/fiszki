@@ -17,6 +17,20 @@
           <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
+
+      <!-- temp -->
+      <v-expansion-panel>
+       <v-expansion-panel-title color="green" hide-actions="True">
+           <h3>Angielski</h3>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-btn @click="moveTo('Angielski', 1, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
+          <v-btn @click="moveTo('Angielski', 1, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
+          <v-btn @click="deleteCollection(1)" class="label" variant="contained-text" color="white">Usuń</v-btn>
+          <v-btn @click="overlay = !overlay; this.temp_id = 1" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+      <!-- temp -->
       
     </v-expansion-panels>
       <v-overlay v-model="overlay" class="align-center justify-center">
@@ -69,8 +83,14 @@ export default {
             console.log(error.message)
           })
       },
-      moveTo(collectionName, collectionId) {
-        this.$router.push({ name: 'ManageCollection', params: { collName: collectionName, collId: collectionId } })
+      moveTo(collectionName, collectionId, where) {
+        if (where == 1) {
+          this.$router.push({ name: 'LearningMode', params: { collName: collectionName, collId: collectionId } })
+        }
+
+        if (where == 2) {
+          this.$router.push({ name: 'ManageCollection', params: { collName: collectionName, collId: collectionId } })
+        }
       },
       refresh() {
       this.refreshData()

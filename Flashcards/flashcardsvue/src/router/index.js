@@ -6,6 +6,7 @@ import Login from '../views/LoginPage.vue'
 import Collections from '../views/CollectionsPage.vue'
 import ManageCollection from '../views/ManageCollection.vue'
 import NotFound from '../views/NotFoundPage.vue'
+import LearningMode from '../views/LearningMode.vue'
 
 const routes = [
     {
@@ -43,6 +44,12 @@ const routes = [
         path: '/collections/:collName-:collId',
         name: 'ManageCollection',
         component: ManageCollection,
+        props: true
+    },
+    {
+        path: '/collections/learn/:collName-:collId',
+        name: 'LearningMode',
+        component: LearningMode,
         props: true
     }
 ]
