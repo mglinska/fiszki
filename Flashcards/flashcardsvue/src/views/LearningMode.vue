@@ -13,14 +13,22 @@
             :key="i"
           >
             <div class="d-flex fill-height justify-center align-center">
-              <div class="text-h2 flashcard">
-                <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
-                <span v-if="fc.Inverted == false"> {{ fc.Question }} </span>
-                <span v-else> {{ fc.Answer }} </span>
-                <br>
-                <v-btn v-if="fc.Inverted == false" @click="check(fc)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
-                <v-btn v-else @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
-                <v-btn v-if="fc.Inverted == true" @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
+              <div :id="'flashcard'+i" class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
+                    <span class="text-h2"> {{ fc.Question }} </span>
+                    <br>
+                    <v-btn @click="check(fc, i)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
+                  </div>
+                  <div class="flip-card-back">
+                    <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
+                    <span class="text-h2"> {{ fc.Answer }} </span>
+                    <br>
+                    <v-btn @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
+                    <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
+                  </div>
+                </div>
               </div>
             </div>
           </v-carousel-item>
@@ -83,19 +91,26 @@ export default {
           })
       },
       
-      check(flashcard) {
+      check(flashcard, index) {
         flashcard.Inverted = !flashcard.Inverted;
+        let id = '#flashcard' + index
+        if(flashcard.Inverted)
+          document.querySelector(id).classList.add('flip-card-clicked');
+        else
+          document.querySelector('.flip-card-clicked').classList.remove('flip-card-clicked');
       },
-
+   
       remove(index) {
-        if(index == this.flashcards.length - 1) {
-          this.flashcards.splice(index, 1);
-          this.currentIndex = 0;
-        }
-        else {
-          this.flashcards.splice(index, 1);
-        }
-
+        document.querySelector(".flip-card-clicked").classList.remove('flip-card-clicked');
+        setTimeout(() => {
+          if(index == this.flashcards.length - 1) {
+            this.flashcards.splice(index, 1);
+            this.currentIndex = 0;
+          }
+          else {
+            this.flashcards.splice(index, 1);
+          }
+        }, 200);
         this.checkIfEverythingIsMemorized();
       },
 
@@ -103,6 +118,12 @@ export default {
         this.flashcards.forEach(function (element) {
             element.Inverted = false;
         });
+
+        setTimeout(() => {
+          let fc = document.querySelector(".flip-card-clicked");
+          if (fc != null)
+            fc.classList.remove('flip-card-clicked');
+        }, 200)
       },
 
       checkIfEverythingIsMemorized()
@@ -135,16 +156,6 @@ export default {
   min-height: 500px;
   }
 
-  .flashcard {
-    position: absolute;
-    height: 80%;
-    max-height: 80%;
-    width: 50%;
-    background-color: bisque;
-    text-align: center;
-    padding: 160px 0;
-  }
-
   .memorized {
     position: absolute;
         left: 80%;
@@ -171,5 +182,51 @@ export default {
         right: 5px;
         top: 0;
   }
+
+  /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  height: 80%;
+  max-height: 80%;
+  width: 50%;
+  background-color: transparent;
+  text-align: center;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card-clicked .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 140px 0;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: bisque;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: bisque;
+  transform: rotateY(180deg);
+}
 
 </style>
