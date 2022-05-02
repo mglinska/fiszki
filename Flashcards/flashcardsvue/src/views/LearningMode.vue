@@ -16,11 +16,19 @@
               <div :id="'flashcard'+i" class="flip-card">
                 <div class="flip-card-inner">
                   <div class="flip-card-front">
-                    <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
-                    <span class="text-h2"> {{ fc.Question }} </span>
-                    <br>
-                    <v-btn @click="check(fc, i)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
+                    <div v-if="!end">
+                      <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
+                      <span class="text-h2"> {{ fc.Question }} </span>
+                      <br>
+                      <v-btn @click="check(fc, i)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
+                    </div>
+                    <div v-if="end">
+                      <h3>Udało Ci się ukończyć naukę!</h3>
+                      <v-btn @click="this.$router.go(-1)" class="end_button" variant="contained-text" color="white">Wróć do kolekcji</v-btn>
+                      <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
+                    </div>
                   </div>
+                  
                   <div class="flip-card-back">
                     <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
                     <span class="text-h2"> {{ fc.Answer }} </span>
@@ -29,16 +37,6 @@
                     <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
                   </div>
                 </div>
-              </div>
-            </div>
-          </v-carousel-item>
-
-          <v-carousel-item v-if="end == true">
-            <div class="d-flex fill-height justify-center align-center">
-              <div class="text-h2 flashcard">
-                <h4>Udało Ci się ukończyć naukę!</h4>
-                <v-btn @click="this.$router.go(-1)" class="end_button" variant="contained-text" color="white">Wróć do kolekcji</v-btn>
-                <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
               </div>
             </div>
           </v-carousel-item>
@@ -101,17 +99,24 @@ export default {
       },
    
       remove(index) {
-        document.querySelector(".flip-card-clicked").classList.remove('flip-card-clicked');
-        setTimeout(() => {
-          if(index == this.flashcards.length - 1) {
-            this.flashcards.splice(index, 1);
+        if(index == this.flashcards.length - 1) {
+          if(this.flashcards.length == 1)
+          {
+            document.querySelector(".flip-card-clicked").classList.remove('flip-card-clicked');
+            this.end = true;
+            return;
+          }
             this.currentIndex = 0;
-          }
-          else {
+            setTimeout(() => {
+              this.flashcards.splice(index, 1);
+            }, 200);
+        }
+        else {
+          document.querySelector(".flip-card-clicked").classList.remove('flip-card-clicked');
+          setTimeout(() => {
             this.flashcards.splice(index, 1);
-          }
-        }, 200);
-        this.checkIfEverythingIsMemorized();
+          }, 200);
+        }
       },
 
       reset() {
@@ -124,13 +129,6 @@ export default {
           if (fc != null)
             fc.classList.remove('flip-card-clicked');
         }, 200)
-      },
-
-      checkIfEverythingIsMemorized()
-      {
-        if (this.flashcards.length == 0) {
-          this.end = true;
-        }
       },
     },
     mounted: function() {
