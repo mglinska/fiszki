@@ -1,12 +1,37 @@
 <template>
     <Navbar />
-    <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px;"></v-btn>
-   
+    <div id="learn_body">
+      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px; margin-top: 10px;"></v-btn>
+
+      <div id="carousel_conatainer">
+        <v-carousel 
+          hide-delimiters
+          v-model="currentIndex"
+        >
+          <v-carousel-item
+            v-for="fc in flashcards"
+            :key="fc.Id_flashcard"
+          >
+            <div class="d-flex fill-height justify-center align-center">
+              <div class="text-h2 flashcard">
+                <span v-if="fc.Inverted == false"> {{ fc.Question }} </span>
+                <span v-else> {{ fc.Answer }} </span>
+                <br>
+                <v-btn v-if="fc.Inverted == false" @click="check(fc)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
+                <v-btn v-else @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
+                <v-btn v-if="fc.Inverted == true" @click="console.log('XD')" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
+              </div>
+            </div>
+
+          </v-carousel-item>
+        </v-carousel>
+      </div>
+    </div>
 </template>
 
 <script>
 import Navbar from '../components/NavBar.vue'
-//import axios from 'axios'
+import axios from 'axios'
 
 export default {
     props: {
@@ -16,52 +41,46 @@ export default {
     
     data() {
       return {
-        
-        flashcards: [
-          {Id_flashcard: 1, Id_collection: 1, Question: 'pies', Answer: 'dog'},
-          {Id_flashcard: 2, Id_collection: 1, Question: 'kot', Answer: 'cat'},
-          {Id_flashcard: 3, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 4, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 5, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 6, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 7, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 8, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 9, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 10, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 11, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 12, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 13, Id_collection: 1, Question: 'ropucha', Answer: 'toad'},
-          {Id_flashcard: 14, Id_collection: 1, Question: 'ropucha', Answer: 'toad'}
-        ], 
-
+        flashcards: [], 
         coll_id: this.collId,
         fc_id: null,
+        currentIndex: 0,
       }
     },
     components: {
       Navbar,
     },
-
+    watch: {
+      currentIndex: function() {
+        console.log('xD')
+      }
+    },
     methods: {
       refreshData() {
-        // axios
-        //   .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
-        //   .then( (response)=>{
-        //     console.log(response.data)
-        //     this.flashcards = response.data;
-        //   })
-        //   .catch( function(error) { 
-        //     console.log(error.message)
-        //   })
-
-        this.flashcards.forEach(function (element) {
+        axios
+          .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
+          .then( (response)=>{
+            this.flashcards = response.data;
+            this.flashcards.forEach(function (element) {
             element.Memorized = false;
+            element.Inverted = false;
         });
-        console.log(this.flashcards);
+          })
+          .catch( function(error) { 
+            console.log(error.message)
+          })
       },
-      refresh() {
-      this.refreshData()
-      }
+      
+      check(flashcard) {
+        flashcard.Inverted = !flashcard.Inverted;
+      },
+
+      checkIfEverythingIsMemorized()
+      {
+        if (this.flashcards.length == 0) {
+          console.log('przejebane')
+        }
+      },
     },
     mounted: function() {
       this.refreshData();
@@ -70,50 +89,43 @@ export default {
 </script>
 
 <style scoped>
-
-#coll_title {
-    margin: auto;
-    text-align: center;
-}
-
-.flashcard {
-  margin: 5px;
-  background: gainsboro;
-  max-height: 140px;
-}
-
-#flashcard_container {
-  position: absolute;
+  #learn_body {
+    background-image: url('../assets/floor-tile.png');
+    background-repeat: repeat;
+    height: 100%;
+  }
+  #carousel_conatainer {
+    position: absolute;
     left: 50%;
-    top: 50px;
+    top: 150px;
     transform: translate(-50%, 0);
   margin: auto;
-  width: 20%;
-}
+  background-color: orange;
+  width: 80%;
+  min-height: 500px;
+  }
 
-.fc_content {
-  float:left;
-  width: 70%;
-  height: 100%;
-  padding: 20px 0;
-}
+  .flashcard {
+    position: absolute;
+    height: 80%;
+    max-height: 80%;
+    width: 50%;
+    background-color: bisque;
+    text-align: center;
+    padding: 160px 0;
+  }
 
-.fc_actions {
-  float:left;
-  width: 30%;
-  height: 100%;
-  text-align: center;
-}
+  .memorized {
+    position: absolute;
+        left: 80%;
+        top: 83%;
+        background-color: orange
+  }
 
-.action_delete, .action_edit {
-  margin: 2px 0px;
-  float: right;
-  display: default;
-}
+  .check {
+    background-color: green;
+    margin-top: 10px;
+  }
+  
 
-.label{
-        background-color: green;
-        display: block;
-        margin: 10px;
-    }
 </style>

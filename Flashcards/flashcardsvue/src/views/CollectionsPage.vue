@@ -11,26 +11,12 @@
            <h3>{{ coll.Name }}</h3>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <v-btn class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo(coll.Name, coll.Id_collection)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
+          <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
+          <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
           <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
-
-      <!-- temp -->
-      <v-expansion-panel>
-       <v-expansion-panel-title color="green" hide-actions="True">
-           <h3>Angielski</h3>
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <v-btn @click="moveTo('Angielski', 1, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo('Angielski', 1, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
-          <v-btn @click="deleteCollection(1)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-          <v-btn @click="overlay = !overlay; this.temp_id = 1" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-      <!-- temp -->
       
     </v-expansion-panels>
       <v-overlay v-model="overlay" class="align-center justify-center">
