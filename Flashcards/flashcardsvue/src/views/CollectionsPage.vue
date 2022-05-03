@@ -14,7 +14,8 @@
           <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
           <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" icon="mdi-pencil" class="label" variant="contained-text" color="white"></v-btn>
+          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" class="label" variant="contained-text" color="white">Edytuj nazwę</v-btn>
+          <v-btn @click="overlay3 = !overlay3; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Udostępnij</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
       
@@ -25,6 +26,10 @@
       <v-overlay v-model="overlay2" class="align-center justify-center">
         <AddContent @refresh="refresh" v-model:overlay="overlay2" />
       </v-overlay>
+      <v-overlay v-model="overlay3" class="align-center justify-center">
+        <Share v-model:coll_name="temp_name" v-model:coll_id="temp_id"/>
+      </v-overlay>
+
 </template>
 
 <script>
@@ -32,6 +37,7 @@ import axios from 'axios'
 import AddContent from '../components/CollAddContent.vue'
 import Navbar from '../components/NavBar.vue'
 import CollectionRename from '../components/CollectionRename.vue'
+import Share from '../components/ShareLink.vue'
 
 export default {
   data() {
@@ -41,7 +47,9 @@ export default {
       collections: [],
       overlay: false,
       overlay2: false,
-      temp_id: null
+      overlay3: false,
+      temp_id: null,
+      temp_name: null
     }
   },
   methods: {
@@ -86,6 +94,7 @@ export default {
     AddContent,
     Navbar,
     CollectionRename,
+    Share
   },
   mounted: function() {
       this.refreshData();

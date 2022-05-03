@@ -7,6 +7,7 @@ import Collections from '../views/CollectionsPage.vue'
 import ManageCollection from '../views/ManageCollection.vue'
 import NotFound from '../views/NotFoundPage.vue'
 import LearningMode from '../views/LearningMode.vue'
+import SharedLearningMode from '../views/SharedLearningMode.vue'
 
 const routes = [
     {
@@ -51,7 +52,14 @@ const routes = [
         name: 'LearningMode',
         component: LearningMode,
         props: true
+    },
+    {
+        path: '/:collName-:collId-:admixture',
+        name: 'SharedLearningMode',
+        component: SharedLearningMode,
+        props: true
     }
+
 ]
 
 const router = createRouter({

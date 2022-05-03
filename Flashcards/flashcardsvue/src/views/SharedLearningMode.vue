@@ -1,10 +1,8 @@
 <template>
-    <Navbar />
     <div id="learn_body">
-      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px; margin-top: 10px;"></v-btn>
-      <div style="margin: auto; text-align: center;">
-        <h1> {{ collName }} </h1>
-      </div>
+        <div style="margin: auto; text-align: center;">
+            <h1 style="padding: 50px 0;"> {{ coll_name }} </h1>
+        </div>
       <div id="carousel_conatainer">
         <v-carousel 
           hide-delimiters
@@ -26,7 +24,6 @@
                     </div>
                     <div v-if="end">
                       <h3>Udało Ci się ukończyć naukę!</h3>
-                      <v-btn @click="this.$router.go(-1)" class="end_button" variant="contained-text" color="white">Wróć do kolekcji</v-btn>
                       <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
                     </div>
                   </div>
@@ -49,7 +46,6 @@
 </template>
 
 <script>
-import Navbar from '../components/NavBar.vue'
 import axios from 'axios'
 
 export default {
@@ -62,13 +58,11 @@ export default {
       return {
         flashcards: [], 
         coll_id: this.collId,
+        coll_name: '',
         fc_id: null,
         currentIndex: 0,
         end: false,
       }
-    },
-    components: {
-      Navbar,
     },
     watch: {
       currentIndex: function() {
@@ -76,9 +70,16 @@ export default {
       }
     },
     methods: {
+      decrypt(value) {
+      const CryptoJS = require('crypto-js');
+      return CryptoJS.enc.Base64.parse(value).toString(CryptoJS.enc.Utf8);
+      },
       refreshData() {
+        let localCollName = this.decrypt(this.collName);
+        this.coll_name = localCollName;
+        let localCollId = this.decrypt(this.collId);
         axios
-          .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.collId)
+          .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + localCollId)
           .then( (response)=>{
             this.flashcards = response.data;
             this.flashcards.forEach(function (element) {
