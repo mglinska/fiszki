@@ -17,7 +17,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _flashcardRepository.GetAllFlashcards());
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _flashcardRepository.GetFlashcardById(flashcardId));
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -37,7 +37,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _flashcardRepository.GetFlashcardsByCollectionId(collectionId));
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _flashcardRepository.CreateFlashcard(flashcard, userId));
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Flashcards.Controllers {
             try {
                 return Ok(await _flashcardRepository.UpdateFlashcard(flashcard));
             } catch (Exception ex) {
-                return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
             }
         }
 

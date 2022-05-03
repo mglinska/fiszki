@@ -44,7 +44,7 @@ namespace Flashcards.Models {
         }
 
         public async Task<Flashcard> UpdateFlashcard( Flashcard flashcard ) {
-            var result = await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_collection == flashcard.Id_collection);
+            var result = await _context.Flashcard.FirstOrDefaultAsync(c => c.Id_flashcard == flashcard.Id_flashcard);
 
             if (result != null) {
                 //result.Id_flashcard = flashcard.Id_flashcard;

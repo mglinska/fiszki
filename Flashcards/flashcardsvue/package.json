@@ -19,6 +19,7 @@
     "vue-axios": "^3.4.1",
     "vue-cookie-next": "^1.3.0",
     "vue-router": "^4.0.14",
+    "vue3-carousel": "^0.1.40",
     "vuetify": "npm:@vuetify/nightly@next",
     "webfontloader": "^1.0.0"
   },

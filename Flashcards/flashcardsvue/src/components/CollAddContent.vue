@@ -36,8 +36,8 @@
 import axios from 'axios'
 
 export default {
-  props: ['status'],
-  emits: ['update:status'],
+  props: ['overlay'],
+  emits: ['update:overlay'],
   data: () => ({
       name: '',
       nameRules: [
