@@ -35,7 +35,7 @@
 import axios from 'axios'
 
 export default {
-  props: ['overlay', 'coll_id' , 'fc_id'],
+  props: ['overlay', 'coll_id' , 'fc_id', 'awers_', 'rewers_'],
   emits: ['update:overlay', 'update:fc_id'],
   data: () => ({
       awers: '',
@@ -78,6 +78,12 @@ export default {
           }
         });
       },
+    },
+    mounted: function() {
+      console.log(this.awers_)
+      console.log(this.rewers_)
+      this.awers = this.awers_
+      this.rewers = this.rewers_
     },
 }
 </script>

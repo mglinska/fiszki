@@ -66,7 +66,7 @@
           console.log(response.data);
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
-          this.$router.push({ name: 'Home'});
+          this.$router.push({ name: 'Collections'});
         }).catch((error) => {
           console.log(error.response)
         })

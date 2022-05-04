@@ -7,10 +7,11 @@
     v-model="valid"
     lazy-validation
   >
-    <v-text-field
+    <v-text-field 
+      id="field"
       v-model="name"
       :rules="nameRules"
-      label="Wprowadź nazwę kolekcji"
+      label="Edytuj nazwę kolekcji"
       required
     ></v-text-field>
 
@@ -30,7 +31,7 @@
 import axios from 'axios'
 
 export default {
-  props: ['overlay', 'coll_id'],
+  props: ['overlay', 'coll_id', 'coll_name'],
   emits: ['update:overlay'],
   data: () => ({
       name: '',
@@ -67,6 +68,9 @@ export default {
         });
       },
     },
+    mounted: function() {
+      this.name = this.coll_name
+    }
 }
 </script>
 
