@@ -28,10 +28,6 @@ export default {
       const CryptoJS = require('crypto-js');
       return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(value));
     },
-    decrypt(value) {
-      const CryptoJS = require('crypto-js');
-      return CryptoJS.enc.Base64.parse(value).toString(CryptoJS.enc.Utf8);
-    },
     generate_link() {
       let base = 'http://localhost:8080/'
       let admixture = this.encrypt(Math.floor(Date.now() / 1000));

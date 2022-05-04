@@ -134,6 +134,9 @@ export default {
       },
     },
     mounted: function() {
+      if(sessionStorage.getItem('user_id') === null) {
+        this.$router.push({ name: 'NoPermissionPage'});
+      }
       this.refreshData();
     },
 }

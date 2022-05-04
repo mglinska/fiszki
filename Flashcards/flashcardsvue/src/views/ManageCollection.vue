@@ -24,7 +24,7 @@
               <v-col align="center">
                 <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
                 </v-btn>
-                <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard;" icon="mdi-pencil" variant="outlined" class="action_edit">
+                <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard; this.temp_awers = fc.Question; this.temp_rewers = fc.Answer" icon="mdi-pencil" variant="outlined" class="action_edit">
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -38,7 +38,7 @@
       <FlashcardAdd @refresh="refresh" v-model:overlay="overlay1" v-model:coll_id="coll_id"/>
     </v-overlay>
     <v-overlay v-model="overlay2" class="align-center justify-center">
-      <FlashcardEdit @refresh="refresh" v-model:overlay="overlay2" v-model:coll_id="coll_id" v-model:fc_id="fc_id"/>
+      <FlashcardEdit @refresh="refresh" v-model:overlay="overlay2" v-model:coll_id="coll_id" v-model:fc_id="fc_id" v-model:awers_="temp_awers" v-model:rewers_="temp_rewers"/>
     </v-overlay>
 </template>
 
@@ -78,6 +78,8 @@ export default {
         fc_id: null,
         overlay1: false,
         overlay2: false,
+        temp_awers: null,
+        temp_rewers: null,
       }
     },
     components: {
@@ -115,6 +117,9 @@ export default {
       }
     },
     mounted: function() {
+      if(sessionStorage.getItem('user_id') === null) {
+        this.$router.push({ name: 'NoPermissionPage'});
+      }
       this.refreshData();
     },
 }

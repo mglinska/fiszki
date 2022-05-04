@@ -14,14 +14,14 @@
           <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
           <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
           <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection" class="label" variant="contained-text" color="white">Edytuj nazwę</v-btn>
+          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Edytuj nazwę</v-btn>
           <v-btn @click="overlay3 = !overlay3; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Udostępnij</v-btn>
         </v-expansion-panel-text>
       </v-expansion-panel>
       
     </v-expansion-panels>
       <v-overlay v-model="overlay" class="align-center justify-center">
-        <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id"/>
+        <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id" v-model:coll_name="temp_name" />
       </v-overlay>
       <v-overlay v-model="overlay2" class="align-center justify-center">
         <AddContent @refresh="refresh" v-model:overlay="overlay2" />
@@ -97,6 +97,9 @@ export default {
     Share
   },
   mounted: function() {
+      if(sessionStorage.getItem('user_id') === null) {
+        this.$router.push({ name: 'NoPermissionPage'});
+      }
       this.refreshData();
     }
 }

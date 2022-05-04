@@ -8,6 +8,8 @@ import ManageCollection from '../views/ManageCollection.vue'
 import NotFound from '../views/NotFoundPage.vue'
 import LearningMode from '../views/LearningMode.vue'
 import SharedLearningMode from '../views/SharedLearningMode.vue'
+import NoPermissionPage from '../views/NoPermissionPage.vue'
+
 
 const routes = [
     {
@@ -58,7 +60,14 @@ const routes = [
         name: 'SharedLearningMode',
         component: SharedLearningMode,
         props: true
+    },
+    {
+        path: '/nopermission',
+        name: 'NoPermissionPage',
+        component: NoPermissionPage,
+        
     }
+
 
 ]
 
