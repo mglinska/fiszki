@@ -8,6 +8,7 @@
       lazy-validation
     >
       <v-text-field
+        class="text-field"
         v-model="awers"
         :rules="awersRules"
         label="Awers"
@@ -15,12 +16,14 @@
       ></v-text-field>
 
       <v-text-field
+        class="text-field"
         v-model="rewers"
         :rules="rewersRules"
         label="Rewers"
       ></v-text-field>
 
       <v-btn
+        id="btn"
         color="success"
         class="mr-4"
         @click="validate"

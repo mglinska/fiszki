@@ -8,6 +8,7 @@
     lazy-validation
   >
     <v-text-field
+      class="text-field"
       v-model="name"
       :rules="nameRules"
       label="Wprowadź nazwę kolekcji"
@@ -15,12 +16,14 @@
     ></v-text-field>
 
      <v-text-field
+      class="text-field"
       v-model="description"
       :rules="descriptionRules"
       label="Opis"
     ></v-text-field>
 
     <v-btn
+      id="btn"
       color="success"
       class="mr-4"
       @click="validate"
@@ -59,8 +62,6 @@ export default {
         formData['name'] = this.name;
         formData['description'] = this.description;
 
-        console.log(formData)
-        
         axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
           this.$emit('update:overlay', false);
           this.$emit("refresh", "cokolwiek");

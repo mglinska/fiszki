@@ -2,12 +2,13 @@
   <div id="background">
     <h1 style="margin: 30px;">Edytuj Fiszkę</h1>
     <v-form 
-    id="add_fc_form"
+    id="edit_fc_form"
     ref="form"
     v-model="valid"
     lazy-validation
   >
     <v-text-field
+      class="text-field"
       v-model="awers"
       :rules="awersRules"
       label="Awers"
@@ -15,12 +16,14 @@
     ></v-text-field>
 
      <v-text-field
-      v-model="rewers"
-      :rules="rewersRules"
-      label="Rewers"
+       class="text-field"
+       v-model="rewers"
+       :rules="rewersRules"
+       label="Rewers"
     ></v-text-field>
 
     <v-btn
+      id="btn"
       color="success"
       class="mr-4"
       @click="validate"
@@ -89,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-#add_fc_form {
+#edit_fc_form {
   margin: 10px;
 }
 
