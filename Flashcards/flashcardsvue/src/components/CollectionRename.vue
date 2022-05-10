@@ -2,13 +2,13 @@
   <div id="background">
     <h1 style="margin: 30px;">Zmień nazwę kolekcji</h1>
     <v-form 
-    id="add_coll_form"
+    id="rename_coll_form"
     ref="form"
     v-model="valid"
     lazy-validation
   >
     <v-text-field 
-      id="field"
+      id="text-field"
       v-model="name"
       :rules="nameRules"
       label="Edytuj nazwę kolekcji"
@@ -16,11 +16,12 @@
     ></v-text-field>
 
     <v-btn
+      id="btn"
       color="success"
       class="mr-4"
       @click="validate"
     >
-      Zatwierdź zmianę!
+      Zapisz!
     </v-btn>
 
   </v-form>
