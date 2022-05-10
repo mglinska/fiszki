@@ -28,7 +28,7 @@
      <v-text-field
       v-model="password"
       :rules="passwordRules"
-      :type="password"
+      :type="'password'"
       label="Password"
       required
       v-on:keyup.enter="validate"
@@ -37,7 +37,7 @@
      <v-text-field
       v-model="repassword"
       :rules="repasswordRules"
-      :type="password"
+      :type="'password'"
       label="Repeat password"
       required
       v-on:keyup.enter="validate"

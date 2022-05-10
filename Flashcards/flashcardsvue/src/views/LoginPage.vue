@@ -19,7 +19,7 @@
      <v-text-field
       v-model="password"
       :rules="passwordRules"
-      :type="password"
+      :type="'password'"
       label="Password"
       required
       v-on:keyup.enter="validate"
