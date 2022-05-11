@@ -1,6 +1,6 @@
 <template>
-  <Navbar />
-  <LoginForm />
+ <Navbar />
+ <LoginForm />
 </template>
 
 <script>
@@ -9,7 +9,7 @@
   export default {
     components: {
       Navbar,
-      LoginForm
+      LoginForm,
     }
   }
 </script>

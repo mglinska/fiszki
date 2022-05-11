@@ -1,64 +1,64 @@
 <template>
-  <h1 style="margin: 35px;">Register</h1>
-  <v-form 
-      id=reg_form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-      v-on:submit.prevent="validate"
+<h1 style="margin: 35px;">Register</h1>
+ <v-form 
+    id=reg_form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+    v-on:submit.prevent="validate"
+  >
+    <v-text-field
+      v-model="name"
+      :counter="20"
+      :rules="nameRules"
+      label="Name"
+      required
+      v-on:keyup.enter="validate"
+    ></v-text-field>
+
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+      v-on:keyup.enter="validate"
+    ></v-text-field>
+
+     <v-text-field
+      v-model="password"
+      :rules="passwordRules"
+      :type="'password'"
+      label="Password"
+      required
+      v-on:keyup.enter="validate"
+    ></v-text-field>
+
+     <v-text-field
+      v-model="repassword"
+      :rules="repasswordRules"
+      :type="'password'"
+      label="Repeat password"
+      required
+      v-on:keyup.enter="validate"
+    ></v-text-field>
+
+    <v-checkbox
+      v-model="checkbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="I have read and accept the regulations"
+      required
+      v-on:keyup.enter="validate"
+    ></v-checkbox>
+
+    <v-btn
+      color="success"
+      class="mr-4"
+      @click="validate"
     >
-      <v-text-field
-        v-model="name"
-        :counter="20"
-        :rules="nameRules"
-        label="Name"
-        required
-        v-on:keyup.enter="validate"
-      ></v-text-field>
+      Utwórz konto
+    </v-btn>
 
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-        v-on:keyup.enter="validate"
-      ></v-text-field>
-
-      <v-text-field
-        v-model="password"
-        :rules="passwordRules"
-        :type="'password'"
-        label="Password"
-        required
-        v-on:keyup.enter="validate"
-      ></v-text-field>
-
-      <v-text-field
-        v-model="repassword"
-        :rules="repasswordRules"
-        :type="'password'"
-        label="Repeat password"
-        required
-        v-on:keyup.enter="validate"
-      ></v-text-field>
-
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[v => !!v || 'You must agree to continue!']"
-        label="I have read and accept the regulations"
-        required
-        v-on:keyup.enter="validate"
-      ></v-checkbox>
-
-      <v-btn
-        color="success"
-        class="mr-4"
-        @click="validate"
-      >
-        Sign up!
-      </v-btn>
-
-    </v-form>
+  </v-form>
 </template>
 
 <script>

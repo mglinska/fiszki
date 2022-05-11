@@ -1,35 +1,40 @@
 <template>
   <Navbar />
-  <h1 style="margin: 35px;">Kolekcje</h1>
-  <v-btn @click="overlay2 = !overlay2" class="label" variant="contained-text" color="white">Dodaj kolekcje</v-btn>
+  <div id="collections-body">
+    <v-btn @click="overlay2 = !overlay2" icon="mdi-plus-box-multiple" id="label-add" variant="contained-text" color="white"></v-btn>
 
-  <div style="height: 10px;"></div>
-    <v-expansion-panels  id="collections">
+      <v-expansion-panels  id="collections">
+        <v-col
+          v-for="coll in collections"
+          :key="coll.id"
+          cols="4"
+          sm="4"
+        >
+        <v-expansion-panel class="collection-item">
+          <v-expansion-panel-title class="collection-title" color=rgb(32,124,92) hide-actions="True">
+            <h3 class="title">{{ coll.Name }}</h3>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
+            <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
+            <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
+            <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
+            <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Edytuj nazwę</v-btn>
+            <v-btn @click="overlay3 = !overlay3; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Udostępnij</v-btn>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+        </v-col>
 
-      <v-expansion-panel v-for="coll in collections" :key="coll.id">
-        <v-expansion-panel-title color="green" hide-actions="True">
-           <h3>{{ coll.Name }}</h3>
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
-          <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
-          <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>
-          <v-btn @click="overlay = !overlay; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Edytuj nazwę</v-btn>
-          <v-btn @click="overlay3 = !overlay3; this.temp_id = coll.Id_collection; this.temp_name = coll.Name" class="label" variant="contained-text" color="white">Udostępnij</v-btn>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-      
-    </v-expansion-panels>
-      <v-overlay v-model="overlay" class="align-center justify-center">
-        <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id" v-model:coll_name="temp_name" />
-      </v-overlay>
-      <v-overlay v-model="overlay2" class="align-center justify-center">
-        <AddContent @refresh="refresh" v-model:overlay="overlay2" />
-      </v-overlay>
-      <v-overlay v-model="overlay3" class="align-center justify-center">
-        <Share v-model:coll_name="temp_name" v-model:coll_id="temp_id"/>
-      </v-overlay>
-
+      </v-expansion-panels>
+        <v-overlay v-model="overlay" class="align-center justify-center">
+          <CollectionRename @refresh="refresh" v-model:overlay="overlay" v-model:coll_id="temp_id" v-model:coll_name="temp_name" />
+        </v-overlay>
+        <v-overlay v-model="overlay2" class="align-center justify-center">
+          <AddContent @refresh="refresh" v-model:overlay="overlay2" />
+        </v-overlay>
+        <v-overlay v-model="overlay3" class="align-center justify-center">
+          <Share v-model:coll_name="temp_name" v-model:coll_id="temp_id"/>
+        </v-overlay>
+  </div>
 </template>
 
 <script>
@@ -106,16 +111,61 @@ export default {
 </script>
 
 <style scoped>
+    #page-title {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #collections-body {
+      background-image: url('../assets/floor-tile.png');
+      background-repeat: repeat;
+      height: 100%;
+
+      padding-top: 1.5%;
+    }
+
+    #label-add {
+      z-index: 2;
+
+      position:fixed;
+      width:60px;
+      height:60px;
+      bottom:2%;
+      right:2%;
+
+      background-color:#3A3731;
+      display: block;
+    }
+
     .label{
-        background-color: green;
-        display: block;
-        margin: 10px;
-        margin-left: 35px;
+      width: 50%;
+
+      margin-left: auto;
+      margin-right: auto;
+      
+      background-color:rgb(32,124,92);
+      display: block;
+
+      margin-top: 2.5%;
+    }
+
+    .title {
+      width: 100%;
+    }
+
+    .collection-title {
+      color: white;
+      font-size: 32px;
+      min-height: 100px;
+    }
+
+    .collection-item {
+      margin-left: 10%;
+      margin-right: 10%;
     }
 
     #collections{
-      width: 20%;
-      margin-left: 35px;
+      padding: 20px;
     }
 
     .coll:hover{

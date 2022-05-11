@@ -29,10 +29,11 @@
       class="mr-4"
       @click="validate"
     >
-      Log in!
+      Zaloguj się
     </v-btn>
 
   </v-form>
+  <h4 style="color: red;"> {{wrong_data_message}}</h4>
 </template>
 
 <script>
@@ -50,12 +51,11 @@
         v => (v && v.length >= 8) || 'Password must be more than 8 characters',
         v => (v && v.length <= 29) || 'Password must be less than 30 characters',
       ],
+      wrong_data_message: '',
     }),
     methods: {
       submit() {
-
         const formData = {};
-
         formData['first_name'] = "";
         formData['email'] = this.email;
         formData['password'] = this.encrypt(this.password);
@@ -67,6 +67,7 @@
           this.$router.push({ name: 'Collections'});
         }).catch((error) => {
           console.log(error.response)
+          this.wrong_data_message = 'Wprowadzone email lub hasło jest nieprawidłowę'
         })
       },
       encrypt(password) {
@@ -74,6 +75,7 @@
         return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
       },
       validate() {
+        this.wrong_data_message = ''
         this.$refs.form.resetValidation();
         const prom = this.$refs.form.validate();
         prom.then((a) => {

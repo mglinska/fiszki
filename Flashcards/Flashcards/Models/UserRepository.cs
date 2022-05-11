@@ -11,15 +11,30 @@ namespace Flashcards.Models {
         }
 
         public async Task<List<User>> GetAllUsers() {
-            return await _context.User.ToListAsync();
+            List<User> users = await _context.User.ToListAsync();
+
+            if (users != null) {
+                foreach (User user in users) {
+                    user.Password = "";
+                }
+            }
+
+            return users;
         }
 
         public async Task<User> GetUserById( int userId ) {
-            return await _context.User.FirstOrDefaultAsync(u => u.Id_user == userId);
+            User user = await _context.User.FirstOrDefaultAsync(u => u.Id_user == userId);
+            if (user != null) {
+                user.Password = "";
+            }
+
+            return user;
         }
 
         public async Task<User> GetUserByLogin( string login ) {
-            return await _context.User.FirstOrDefaultAsync(u => u.Email == login);
+            User user = await _context.User.FirstOrDefaultAsync(u => u.Email == login);
+
+            return user;
         }
 
         public async Task<User> RegisterUser( User user ) {
@@ -39,6 +54,8 @@ namespace Flashcards.Models {
 
                 _context.Entry(result).CurrentValues.SetValues(user);
                 await _context.SaveChangesAsync();
+
+                result.Password = "";
 
                 return result;
             }
