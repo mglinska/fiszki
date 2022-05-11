@@ -53,8 +53,6 @@ export default {
         formData['name'] = this.name;
         formData['description'] = this.description;
 
-        console.log(formData)
-        
         axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
           this.$emit('update:overlay', false);
           this.$emit("refresh", "cokolwiek");
