@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <v-input :messages="link" class="XD">
+    <v-input :messages="link" id="input_with_link">
       <h3>Link do udostępnienia:</h3>
     </v-input>
     <v-btn
@@ -10,6 +10,7 @@
     >
       Skopiuj do schowka
     </v-btn>
+    <span id='link' style="display: none;"> {{ link }} </span>
   </div>
 </template>
 

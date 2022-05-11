@@ -122,4 +122,7 @@ export default {
       cursor: pointer;
     }
 
+    .collection {
+      text-align: center;
+    }
 </style>

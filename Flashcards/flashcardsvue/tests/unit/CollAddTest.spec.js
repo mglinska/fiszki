@@ -9,14 +9,12 @@ beforeEach(() => {
 
 describe('CollAddContent.vue', () => {
   it('renderuje formularz dodawania kolekcji', () => {
-    const form = wrapper.find("#add_coll_form");
-    expect(form).toBeInstanceOf(Object)
+    expect(wrapper.find("#add_coll_form").exists()).toBe(true);
   });
 
   it('zawiera 2 pola tekstowe i 1 przycisk', () => {
-    const text_fields = wrapper.findAll(".text-field");
     const button = wrapper.find("#btn");
-    expect(text_fields.length).toBe(2);
+    expect(wrapper.find('.text-field').exists()).toBe(true);
     expect(button.text()).toBe("Dodaj!");
   })
 })

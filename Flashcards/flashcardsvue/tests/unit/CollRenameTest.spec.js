@@ -9,14 +9,12 @@ beforeEach(() => {
 
 describe('CollectionRename.vue', () => {
   it('renderuje formularz edycji kolekcji', () => {
-    const form = wrapper.find("#rename_coll_form");
-    expect(form).toBeInstanceOf(Object)
+    expect(wrapper.find("#rename_coll_form").exists()).toBe(true);
   });
 
   it('zawiera 1 pole tekstowe i 1 przycisk', () => {
-    const text_fields = wrapper.findAll("#text-field");
     const button = wrapper.find("#btn");
-    expect(text_fields.length).toBe(1);
+    expect(wrapper.find(".text-field").exists()).toBe(true);
     expect(button.text()).toBe("Zapisz!");
   })
 })

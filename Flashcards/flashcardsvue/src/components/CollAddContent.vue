@@ -15,13 +15,6 @@
       required
     ></v-text-field>
 
-     <v-text-field
-      class="text-field"
-      v-model="description"
-      :rules="descriptionRules"
-      label="Opis"
-    ></v-text-field>
-
     <v-btn
       id="btn"
       color="success"
@@ -48,10 +41,6 @@ export default {
         v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
         v => (v && v.length <= 50) || 'Nazwa kolekcji musi mieć mniej niż 50 znaki'
       ],
-      description: '',
-      descriptionRules: [
-        v => (v.length <= 255) || 'Opis kolekcji musi mieć mniej niż 255 znaków',
-      ],
       user: []
     }),
     methods: {
@@ -60,7 +49,7 @@ export default {
         const formData = {};
         
         formData['name'] = this.name;
-        formData['description'] = this.description;
+        formData['description'] = '';
 
         axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
           this.$emit('update:overlay', false);
