@@ -73,11 +73,12 @@ namespace Flashcards.Controllers {
                 if (loginUser != null) {
                     if (user.Password.Equals(loginUser.Password)) {
                         HttpContext.Session.SetString("login", user.Email);
+                        loginUser.Password = "";
                         return Ok(loginUser);
                     }
                 }
 
-                throw new Exception();
+                return null;
             } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }
