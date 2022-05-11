@@ -246,13 +246,13 @@ export default {
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-  background-color: #E4E8F0;
+  background-color: white;
   border-radius: 20px;
 }
 
 /* Style the back side */
 .flip-card-back {
-  background-color: #fefecc;
+  background-color: white;
   transform: rotateY(180deg);
 }
 

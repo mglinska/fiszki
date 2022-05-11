@@ -26,6 +26,18 @@ namespace Flashcards.Models {
             var user = await _context.User.FirstOrDefaultAsync(u => u.Id_user == userId);
 
             if (user != null) {
+                var allCollectionsUser = await _context.Collection_user.Where(u => u.Id_user == userId).ToListAsync();
+
+                foreach (var col in allCollectionsUser) {
+                    Collection collectionU = await _context.Collection.FirstOrDefaultAsync(c => c.Id_collection == col.Id_collection);
+
+                    if(collectionU.Name == collection.Name) {
+                        collection.Id_collection = -1;
+
+                        return collection;
+                    }
+                }
+
                 var result = await _context.Collection.AddAsync(collection);
                 await _context.SaveChangesAsync();
 

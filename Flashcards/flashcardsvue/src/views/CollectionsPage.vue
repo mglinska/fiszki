@@ -14,7 +14,7 @@
           <v-expansion-panel-title class="collection-title" color=rgb(32,124,92) hide-actions="True">
             <h3 class="title">{{ coll.Name }}</h3>
           </v-expansion-panel-title>
-          <v-expansion-panel-text style="background-color: #E4E8F0;">
+          <v-expansion-panel-text style="background-color: white;">
             <v-btn @click="moveTo(coll.Name, coll.Id_collection, 1)" class="label" variant="contained-text" color="white">Ucz się!</v-btn>
             <v-btn @click="moveTo(coll.Name, coll.Id_collection, 2)" class="label" variant="contained-text" color="white">Zarządzaj</v-btn>
             <v-btn @click="deleteCollection(coll.Id_collection)" class="label" variant="contained-text" color="white">Usuń</v-btn>

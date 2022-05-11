@@ -15,7 +15,9 @@
     ></v-text-field>
 
     <v-btn
+      id="button-add"
       color=rgb(32,124,92)
+      style="color: white"
       class="mr-4"
       @click="validate"
     >
@@ -74,12 +76,16 @@ export default {
 </script>
 
 <style scoped>
+#button-add {
+  background-color:rgb(32,124,92)
+}
+
 #add_fc_form {
   margin: 10px;
 }
 
 #background {
-  background-color: aliceblue;
+  background-color: white;
   padding: 30px;
   border-radius: 10px;
 }
