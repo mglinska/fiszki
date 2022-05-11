@@ -57,6 +57,8 @@
       v-on:keyup.enter="validate"
     ></v-checkbox>
 
+    <h4 id="warning"> {{server_error_message}}</h4>
+
     <v-btn
       id="register-button"
       class="mr-4"
@@ -94,6 +96,7 @@
       ],
       repassword: '',
       checkbox: false,
+      server_error_message: '',
     }),
     computed: {
       repasswordRules() {
@@ -113,8 +116,8 @@
         axios.post("http://localhost:5085/api/" + "User/register", formData).then(()=>{
           this.$router.push({ name: 'Home'});
           alert("the form has been sent");
-        }).catch((error) => {
-          console.log(error.response)
+        }).catch(() => {
+          this.server_error_message = 'Przepraszamy, wystąpił błąd serwera. Nie można teraz utworzyć nowego konta.'
         })
       },
       encrypt(password) {
@@ -122,6 +125,7 @@
         return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
       },
       validate() {
+        this.server_error_message = ''
         this.$refs.form.resetValidation();
         const prom = this.$refs.form.validate();
         prom.then((a) => {
@@ -173,5 +177,10 @@
 
   #register-button {
     font-weight: bold;
+  }
+
+  #warning {
+    color: red;
+    padding-bottom: 30px;
   }
 </style>

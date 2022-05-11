@@ -71,8 +71,7 @@
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
           this.$router.push({ name: 'Collections'});
-        }).catch((error) => {
-          console.log(error.response)
+        }).catch(() => {
           this.wrong_data_message = 'Niepoprawne dane logowania!'
         })
       },
