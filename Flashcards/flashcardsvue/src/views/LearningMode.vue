@@ -1,9 +1,10 @@
 <template>
     <Navbar />
     <div id="learn_body">
-      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px; margin-top: 10px;"></v-btn>
+      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color=#F0ECE4 id="return-button"></v-btn>
+
       <div style="margin: auto; text-align: center;">
-        <h1> {{ collName }} </h1>
+        <h1 id="coll-name"> {{ collName }} </h1>
       </div>
       <div id="carousel_conatainer">
         <v-carousel 
@@ -143,6 +144,25 @@ export default {
 </script>
 
 <style scoped>
+  #coll-name {
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 50px;
+  }
+
+  #return-button {
+    z-index: 2;
+
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:2%;
+    right:2%;
+
+    background-color: #3A3731;
+  }
+
   #learn_body {
     background-image: url('../assets/floor-tile.png');
     background-repeat: repeat;
@@ -153,27 +173,29 @@ export default {
     left: 50%;
     top: 150px;
     transform: translate(-50%, 0);
-  margin: auto;
-  background-color: orange;
-  width: 80%;
-  min-height: 500px;
+    margin: auto;
+    background-color: rgb(32,124,92);
+    width: 80%;
+    min-height: 500px;
+    border-radius: 20px;
   }
 
   .memorized {
     position: absolute;
         left: 80%;
         top: 83%;
-        background-color: orange
+        background-color: rgb(32,124,92)
   }
 
   .check {
-    background-color: green;
-    margin-top: 10px;
+    background-color: rgb(32,124,92);
+    margin-top: 17.5%;
     width: 100px;
+    
   }
 
   .end_button {
-    background-color: green;
+    background-color: rgb(32,124,92);
     margin-top: 10px;
     margin-left: 5px;
     margin-right: 5px;
@@ -182,8 +204,8 @@ export default {
 
   .counter {
     position: absolute;
-        right: 5px;
-        top: 0;
+    right: 15px;
+    top: 10px;
   }
 
   /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
@@ -219,16 +241,18 @@ export default {
   padding: 140px 0;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
+  border-radius: 20px;
 }
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-  background-color: bisque;
+  background-color: #F0ECE4;
+  border-radius: 20px;
 }
 
 /* Style the back side */
 .flip-card-back {
-  background-color: bisque;
+  background-color: #F0ECE4;
   transform: rotateY(180deg);
 }
 

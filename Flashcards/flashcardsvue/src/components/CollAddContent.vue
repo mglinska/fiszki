@@ -14,14 +14,8 @@
       required
     ></v-text-field>
 
-     <v-text-field
-      v-model="description"
-      :rules="descriptionRules"
-      label="Opis"
-    ></v-text-field>
-
     <v-btn
-      color="success"
+      color=rgb(32,124,92)
       class="mr-4"
       @click="validate"
     >
@@ -43,7 +37,7 @@ export default {
       nameRules: [
         v => !!v || 'Nazwa kolekcji jest wymagana',
         v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
-        v => (v && v.length <= 50) || 'Nazwa kolekcji musi mieć mniej niż 50 znaki'
+        v => (v && v.length <= 40) || 'Nazwa kolekcji musi mieć mniej niż 40 znaki'
       ],
       description: '',
       descriptionRules: [
