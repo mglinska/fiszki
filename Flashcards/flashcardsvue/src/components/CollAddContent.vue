@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <h1 style="margin: 30px;">Dodaj kolekcje</h1>
+    <h1 style="margin: 30px;">Dodaj kolekcję</h1>
     <v-form 
     id="add_coll_form"
     ref="form"

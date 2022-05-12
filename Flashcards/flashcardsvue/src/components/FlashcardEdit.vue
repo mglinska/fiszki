@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <h1 style="margin: 30px;">Edytuj Fiszkę</h1>
+    <h1 style="margin: 30px;">Edytuj fiszkę</h1>
     <v-form 
     id="edit_fc_form"
     ref="form"

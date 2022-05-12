@@ -5,6 +5,9 @@
       <div id="user-name">
           <h1> {{ username }} </h1>
       </div>
+      <div v-if="this.username == undefined" id="user-name">
+          <h1> Moje kolekcje </h1>
+      </div>
       <v-expansion-panels  id="collections">
         <v-col
           v-for="coll in collections"

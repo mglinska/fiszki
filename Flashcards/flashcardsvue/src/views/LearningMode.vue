@@ -44,6 +44,21 @@
             </div>
           </v-carousel-item>
 
+          <v-carousel-item v-if="flashcards.length == 0">
+            <div class="d-flex fill-height justify-center align-center">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div v-if="!end">
+                      <h3>Ups! Najwyraźniej nie dodałeś żadnych fiszek do tej kolekcji!</h3>
+                      <v-btn @click="moveToManageColl" class="check" variant="contained-text" color="white" style="width: 200px;">Zarządzaj kolekcją</v-btn>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-carousel-item>
+
         </v-carousel>
       </div>
     </div>
@@ -133,7 +148,11 @@ export default {
             fc.classList.remove('flip-card-clicked');
         }, 200)
       },
+      moveToManageColl() {
+        this.$router.push({ name: 'ManageCollection', params: { collName: this.collName, collId: this.collId } })
+      }
     },
+
     mounted: function() {
       if(sessionStorage.getItem('user_id') === null) {
         this.$router.push({ name: 'NoPermissionPage'});
