@@ -1,5 +1,7 @@
 <template>
-<h1 style="margin: 35px;">Register</h1>
+  <div id="register-body">
+    <div id="register-container">
+      <h1 id="title-text">Rejestracja</h1>
  <v-form 
     id=reg_form
     ref="form"
@@ -8,6 +10,7 @@
     v-on:submit.prevent="validate"
   >
     <v-text-field
+      class="form-text"
       v-model="name"
       :counter="20"
       :rules="nameRules"
@@ -17,6 +20,7 @@
     ></v-text-field>
 
     <v-text-field
+      class="form-text"
       v-model="email"
       :rules="emailRules"
       label="E-mail"
@@ -25,6 +29,7 @@
     ></v-text-field>
 
      <v-text-field
+      class="form-text"
       v-model="password"
       :rules="passwordRules"
       :type="'password'"
@@ -34,6 +39,7 @@
     ></v-text-field>
 
      <v-text-field
+      class="form-text"
       v-model="repassword"
       :rules="repasswordRules"
       :type="'password'"
@@ -43,6 +49,7 @@
     ></v-text-field>
 
     <v-checkbox
+      class="checkbox-text"
       v-model="checkbox"
       :rules="[v => !!v || 'You must agree to continue!']"
       label="I have read and accept the regulations"
@@ -50,8 +57,10 @@
       v-on:keyup.enter="validate"
     ></v-checkbox>
 
+    <h4 id="warning"> {{server_error_message}}</h4>
+
     <v-btn
-      color="success"
+      id="register-button"
       class="mr-4"
       @click="validate"
     >
@@ -59,6 +68,8 @@
     </v-btn>
 
   </v-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -85,6 +96,7 @@
       ],
       repassword: '',
       checkbox: false,
+      server_error_message: '',
     }),
     computed: {
       repasswordRules() {
@@ -104,8 +116,8 @@
         axios.post("http://localhost:5085/api/" + "User/register", formData).then(()=>{
           this.$router.push({ name: 'Home'});
           alert("the form has been sent");
-        }).catch((error) => {
-          console.log(error.response)
+        }).catch(() => {
+          this.server_error_message = 'Przepraszamy, wystąpił błąd serwera. Nie można teraz utworzyć nowego konta.'
         })
       },
       encrypt(password) {
@@ -113,6 +125,7 @@
         return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(password));
       },
       validate() {
+        this.server_error_message = ''
         this.$refs.form.resetValidation();
         const prom = this.$refs.form.validate();
         prom.then((a) => {
@@ -124,3 +137,50 @@
     },
 }
 </script>
+
+<style scoped>
+  #register-body {
+    background-image: url('../assets/floor-tile.png');
+    background-repeat: repeat;
+    height: 100%;
+
+    padding-top: 1.5%;
+  }
+    
+  #title-text {
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+  }
+
+  #register-container {
+    text-align: center;
+
+    margin-top: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+
+    background-color: rgb(32,124,92);
+    padding: 50px;
+    border-radius: 20px;
+  }
+
+  .form-text {
+    color: white;
+  }
+
+  .checkbox-text {
+    color: white;
+  }
+
+  #register-button {
+    font-weight: bold;
+  }
+
+  #warning {
+    color: red;
+    padding-bottom: 30px;
+  }
+</style>

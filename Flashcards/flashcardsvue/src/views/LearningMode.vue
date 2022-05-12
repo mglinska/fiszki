@@ -1,7 +1,7 @@
 <template>
     <Navbar />
     <div id="learn_body">
-      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color=#F0ECE4 id="return-button"></v-btn>
+      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="contained-text" color=#F0ECE4 id="return-button"></v-btn>
 
       <div style="margin: auto; text-align: center;">
         <h1 id="coll-name"> {{ collName }} </h1>
@@ -152,13 +152,12 @@ export default {
   }
 
   #return-button {
-    z-index: 2;
+    position: absolute;
+    left: 10%;
+    top: 50px;
 
-    position:fixed;
-    width:60px;
-    height:60px;
-    bottom:2%;
-    right:2%;
+    width: 70px;
+    border-radius: 20px;
 
     background-color: #3A3731;
   }
@@ -168,6 +167,7 @@ export default {
     background-repeat: repeat;
     height: 100%;
   }
+  
   #carousel_conatainer {
     position: absolute;
     left: 50%;
@@ -246,13 +246,13 @@ export default {
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-  background-color: #F0ECE4;
+  background-color: white;
   border-radius: 20px;
 }
 
 /* Style the back side */
 .flip-card-back {
-  background-color: #F0ECE4;
+  background-color: white;
   transform: rotateY(180deg);
 }
 

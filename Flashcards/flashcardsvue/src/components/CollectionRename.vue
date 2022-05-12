@@ -17,7 +17,8 @@
 
     <v-btn
       id="btn"
-      color="success"
+      color=rgb(32,124,92)
+      style="color: white"
       class="mr-4"
       @click="validate"
     >
@@ -77,7 +78,7 @@ export default {
 
 <style scoped>
 #background {
-  background-color: aliceblue;
+  background-color: white;
   padding: 30px;
   border-radius: 10px;
 }

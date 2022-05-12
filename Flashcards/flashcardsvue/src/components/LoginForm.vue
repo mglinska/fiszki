@@ -1,39 +1,45 @@
 <template>
- <h1 style="margin: 35px;">Login</h1>
- <v-form 
-    v-on:submit.prevent="validate"
-    id=log_form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required
-      v-on:keyup.enter="validate"
-    ></v-text-field>
+  <div id="login-body">
+    <div id="login-container">
+      <h1 id="title-text">Logowanie</h1>
 
-     <v-text-field
-      v-model="password"
-      :rules="passwordRules"
-      :type="'password'"
-      label="Password"
-      required
-      v-on:keyup.enter="validate"
-    ></v-text-field>
+      <v-form 
+        v-on:submit.prevent="validate"
+        id=log_form
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
+      <v-text-field
+        class="form-text"
+        v-model="email"
+        :rules="emailRules"
+        label="E-mail"
+        required
+        v-on:keyup.enter="validate"
+      ></v-text-field>
+      <v-text-field
+        class="form-text"
+        v-model="password"
+        :rules="passwordRules"
+        :type="'password'"
+        label="Password"
+        required
+        v-on:keyup.enter="validate"
+      ></v-text-field>
 
-    <v-btn
-      color="success"
-      class="mr-4"
-      @click="validate"
-    >
-      Zaloguj się
-    </v-btn>
+      <h4 id="warning"> {{wrong_data_message}}</h4>
 
-  </v-form>
-  <h4 style="color: red;"> {{wrong_data_message}}</h4>
+      <v-btn
+        id="login-button"
+        @click="validate"
+      >
+        Zaloguj się
+      </v-btn>
+
+      </v-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -61,13 +67,12 @@
         formData['password'] = this.encrypt(this.password);
 
         axios.post("http://localhost:5085/api/" + "User/login", formData).then((response)=>{
-          console.log(response.data);
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
-          this.$router.push({ name: 'Collections'});
-        }).catch((error) => {
-          console.log(error.response)
-          this.wrong_data_message = 'Wprowadzone email lub hasło jest nieprawidłowę'
+          let message = 'Witaj ponownie ' + zmienna.First_name;
+          this.$router.push({ name: 'Collections', params: { username: message }});
+        }).catch(() => {
+          this.wrong_data_message = 'Niepoprawne dane logowania!'
         })
       },
       encrypt(password) {
@@ -87,3 +92,46 @@
     },
   }
 </script>
+
+<style scoped>
+  #login-body {
+    background-image: url('../assets/floor-tile.png');
+    background-repeat: repeat;
+    height: 100%;
+
+    padding-top: 1.5%;
+  }
+    
+  #title-text {
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+  }
+
+  #login-container {
+    text-align: center;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: 20%;
+
+    background-color: rgb(32,124,92);
+    padding: 50px;
+    border-radius: 20px;
+  }
+
+  .form-text {
+    color: white;
+  }
+
+  #warning {
+    color: red;
+    padding-bottom: 30px;
+  }
+
+  #login-button {
+    font-weight: bold;
+  }
+</style>

@@ -1,45 +1,49 @@
 <template>
     <Navbar />
-    <div id="coll_title">
-        <h1> {{ collName }} </h1>
-    </div>
-    <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="outlined" color="green" style="margin-left: 35px;"></v-btn> 
-    <br>
-    <br>
-    <v-btn @click="overlay1 = !overlay1" class="label" variant="contained-text" color="white" style="margin-left: 35px;">Utwórz fiszkę</v-btn>
+    <div id="manage-body">
+      <div id="coll-name">
+          <h1> {{ collName }} </h1>
+      </div>
+      <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="contained-text" color="white" id="return-button"></v-btn> 
+      <br>
+      <br>
+      <v-btn @click="overlay1 = !overlay1" icon="mdi-plus-box-multiple" id="label-add" variant="contained-text" color="white"></v-btn>
 
     <div id="flashcard_container">
       <v-responsive>
-        <v-card v-for="fc in flashcards" :key="fc.Id_flashcard" class="flashcard">
-          <div class="fc_content">
-            <v-card-text>
-              {{ fc.Question }}
-            </v-card-text>
-            <v-card-text>
-              {{ fc.Answer }}
-            </v-card-text>
-          </div>
-          <div class="fc_actions">
-            <v-card-actions>
-              <v-col align="center">
-                <v-btn @click="deleteFlashcard(fc.Id_flashcard)" icon="mdi-trash-can" variant="outlined" class="action_delete">
-                </v-btn>
-                <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard; this.temp_awers = fc.Question; this.temp_rewers = fc.Answer" icon="mdi-pencil" variant="outlined" class="action_edit">
-                </v-btn>
-              </v-col>
-            </v-card-actions>
-          </div>
-          <div style="clear: both;"></div>
+        <v-card
+          id="flashcard-interior"
+          class="mx-auto"
+          max-width="344"
+          v-for="fc in flashcards" 
+          :key="fc.Id_flashcard"
+        >
+          <v-card-title>
+            {{ fc.Question }}
+          </v-card-title>
+
+          <v-card-subtitle>
+            {{ fc.Answer }}
+          </v-card-subtitle>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="deleteFlashcard(fc.Id_flashcard)" size="small" color="white" icon="mdi-trash-can" variant="text">
+            </v-btn>
+            <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard; this.temp_awers = fc.Question; this.temp_rewers = fc.Answer" size="small" color="white" icon="mdi-pencil" variant="text">
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-responsive>
-    </div>
+      </div>
 
-    <v-overlay v-model="overlay1" class="align-center justify-center">
-      <FlashcardAdd @refresh="refresh" v-model:overlay="overlay1" v-model:coll_id="coll_id"/>
-    </v-overlay>
-    <v-overlay v-model="overlay2" class="align-center justify-center">
-      <FlashcardEdit @refresh="refresh" v-model:overlay="overlay2" v-model:coll_id="coll_id" v-model:fc_id="fc_id" v-model:awers_="temp_awers" v-model:rewers_="temp_rewers"/>
-    </v-overlay>
+      <v-overlay v-model="overlay1" class="align-center justify-center">
+        <FlashcardAdd @refresh="refresh" v-model:overlay="overlay1" v-model:coll_id="coll_id"/>
+      </v-overlay>
+      <v-overlay v-model="overlay2" class="align-center justify-center">
+        <FlashcardEdit @refresh="refresh" v-model:overlay="overlay2" v-model:coll_id="coll_id" v-model:fc_id="fc_id" v-model:awers_="temp_awers" v-model:rewers_="temp_rewers"/>
+      </v-overlay>
+    </div>
 </template>
 
 <script>
@@ -55,24 +59,6 @@ export default {
     
     data() {
       return {
-        /*
-        flashcards: [
-          {id: 1, id_coll: 1, question: 'pies', answer: 'dog'},
-          {id: 2, id_coll: 1, question: 'kot', answer: 'cat'},
-          {id: 3, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 4, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 5, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 6, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 7, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 8, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 9, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 10, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 11, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 12, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 13, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 14, id_coll: 1, question: 'ropucha', answer: 'toad'}
-        ], */
-
         flashcards: [],
         coll_id: this.collId,
         fc_id: null,
@@ -127,6 +113,42 @@ export default {
 
 <style scoped>
 
+#coll-name {
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: 50px;
+}
+
+#return-button {
+  position: absolute;
+  left: 10%;
+  top: 50px;
+
+  width: 70px;
+  border-radius: 20px;
+
+  background-color: #3A3731;
+}
+
+#label-add {
+  z-index: 2;
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:2%;
+  right:2%;
+  background-color: #3A3731;
+  display: block;
+}
+
+#manage-body {
+  background-image: url('../assets/floor-tile.png');
+  background-repeat: repeat;
+  height: 100%;
+  padding-top: 1.5%;
+}
+
 #coll_title {
     margin: auto;
     text-align: center;
@@ -134,17 +156,29 @@ export default {
 
 .flashcard {
   margin: 5px;
-  background: gainsboro;
+  background: rgb(32,124,92);
+  color: white;
   max-height: 140px;
 }
 
+.flashcard-text {
+    color: white;
+}
+
 #flashcard_container {
-  position: absolute;
-    left: 50%;
-    top: 50px;
-    transform: translate(-50%, 0);
   margin: auto;
+  margin-top: 50px;
   width: 20%;
+}
+
+#flashcard_container > * {
+    margin: 5px 0;
+}
+
+#flashcard-interior {
+  margin-top: 10px;
+  color: white;
+  background-color: rgb(32,124,92);
 }
 
 .fc_content {
