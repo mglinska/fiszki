@@ -40,6 +40,20 @@
             </div>
           </v-carousel-item>
 
+          <v-carousel-item v-if="flashcards.length == 0">
+            <div class="d-flex fill-height justify-center align-center">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div class="flip-card-front">
+                    <div v-if="!end">
+                      <h3>Ups! Najwyraźniej nie dodano żadnych fiszek do tej kolekcji!</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </v-carousel-item>
+
         </v-carousel>
       </div>
     </div>
