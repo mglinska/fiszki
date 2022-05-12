@@ -67,10 +67,10 @@
         formData['password'] = this.encrypt(this.password);
 
         axios.post("http://localhost:5085/api/" + "User/login", formData).then((response)=>{
-          console.log(response.data);
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
-          this.$router.push({ name: 'Collections'});
+          let message = 'Witaj ponownie ' + zmienna.First_name;
+          this.$router.push({ name: 'Collections', params: { username: message }});
         }).catch(() => {
           this.wrong_data_message = 'Niepoprawne dane logowania!'
         })
