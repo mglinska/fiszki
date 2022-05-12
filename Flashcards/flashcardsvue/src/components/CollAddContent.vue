@@ -8,6 +8,7 @@
     lazy-validation
   >
     <v-text-field
+      class="text-field"
       v-model="name"
       :rules="nameRules"
       label="Wprowadź nazwę kolekcji"

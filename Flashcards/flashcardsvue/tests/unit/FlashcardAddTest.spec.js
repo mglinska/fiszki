@@ -9,8 +9,7 @@ beforeEach(() => {
 
 describe('FlashcardAdd.vue', () => {
   it('renderuje formularz dodawania fiszki', () => {
-    const form = wrapper.find("#add_fc_form");
-    expect(form).toBeInstanceOf(Object)
+    expect(wrapper.find("#add_fc_form").exists()).toBe(true);
   });
 
   it('zawiera 2 pola tekstowe i 1 przycisk', () => {

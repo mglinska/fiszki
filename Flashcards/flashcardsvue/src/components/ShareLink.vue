@@ -1,15 +1,19 @@
 <template>
   <div id="background">
-    <v-input :messages="link" class="XD">
+    <v-input id="input_with_link" :messages="link" class="XD">
       <h3>Link do udostępnienia:</h3>
     </v-input>
     <v-btn
-      color="success"
+      id="btn"
+      color=rgb(32,124,92)
+      style="color: white"
       class="mr-4"
       @click="copy_to_clipboard"
     >
       Skopiuj do schowka
     </v-btn>
+
+    <span id="link" style="display: none"> {{link}} </span>
   </div>
 </template>
 
@@ -54,8 +58,8 @@ export default {
 
 <style scoped>
 #background {
-  background-color: aliceblue;
+  background-color: white;
   padding: 30px;
   border-radius: 10px;
 }
-</style> 
+</style>
