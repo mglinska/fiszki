@@ -59,24 +59,6 @@ export default {
     
     data() {
       return {
-        /*
-        flashcards: [
-          {id: 1, id_coll: 1, question: 'pies', answer: 'dog'},
-          {id: 2, id_coll: 1, question: 'kot', answer: 'cat'},
-          {id: 3, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 4, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 5, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 6, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 7, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 8, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 9, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 10, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 11, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 12, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 13, id_coll: 1, question: 'ropucha', answer: 'toad'},
-          {id: 14, id_coll: 1, question: 'ropucha', answer: 'toad'}
-        ], */
-
         flashcards: [],
         coll_id: this.collId,
         fc_id: null,

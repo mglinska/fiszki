@@ -35,7 +35,8 @@ const routes = [
     {
         path: '/collections',
         name: 'Collections',
-        component: Collections
+        component: Collections,
+        props: true,
     },
     //przechytywanie niepoprawnych url (404)
     {

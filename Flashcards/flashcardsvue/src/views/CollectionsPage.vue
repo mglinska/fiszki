@@ -2,7 +2,9 @@
   <Navbar />
   <div id="collections-body">
     <v-btn @click="overlay2 = !overlay2" icon="mdi-plus-box-multiple" id="label-add" variant="contained-text" color="white"></v-btn>
-
+      <div id="user-name">
+          <h1> {{ username }} </h1>
+      </div>
       <v-expansion-panels  id="collections">
         <v-col
           v-for="coll in collections"
@@ -45,6 +47,9 @@ import CollectionRename from '../components/CollectionRename.vue'
 import Share from '../components/ShareLink.vue'
 
 export default {
+  props: {
+      username: String,
+  },
   data() {
     return {
       title: 'Collections',
@@ -106,6 +111,7 @@ export default {
         this.$router.push({ name: 'NoPermissionPage'});
       }
       this.refreshData();
+      console.log(this.username);
     }
 }
 </script>
@@ -166,10 +172,18 @@ export default {
 
     #collections{
       padding: 20px;
+      margin-top: 40px;
     }
 
     .coll:hover{
       cursor: pointer;
     }
+
+    #user-name {
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: 30px;
+}
 
 </style>

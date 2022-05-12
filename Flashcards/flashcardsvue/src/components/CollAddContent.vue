@@ -41,10 +41,6 @@ export default {
         v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
         v => (v && v.length <= 40) || 'Nazwa kolekcji musi mieć mniej niż 40 znaki'
       ],
-      description: '',
-      descriptionRules: [
-        v => (v.length <= 255) || 'Opis kolekcji musi mieć mniej niż 255 znaków',
-      ],
       user: []
     }),
     methods: {
@@ -53,9 +49,10 @@ export default {
         const formData = {};
         
         formData['name'] = this.name;
-        formData['description'] = this.description;
+        formData['description'] = '';
 
         axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
+          //response.data zwraca -1 jesli taka sama 
           this.$emit('update:overlay', false);
           this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
