@@ -14,7 +14,7 @@
       label="Wprowadź nazwę kolekcji"
       required
     ></v-text-field>
-
+    <h4 id="warning"> {{wrong_data_message}}</h4>
     <v-btn
       id="button-add"
       color=rgb(32,124,92)
@@ -42,7 +42,8 @@ export default {
         v => (v && v.length >= 3) || 'Nazwa kolekcji musi mieć wiecej niż 2 znaki',
         v => (v && v.length <= 40) || 'Nazwa kolekcji musi mieć mniej niż 40 znaki'
       ],
-      user: []
+      user: [],
+      wrong_data_message: ''
     }),
     methods: {
       submit() {
@@ -52,8 +53,12 @@ export default {
         formData['name'] = this.name;
         formData['description'] = '';
 
-        axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then(()=>{
-          //response.data zwraca -1 jesli taka sama 
+        axios.post("http://localhost:5085/api/" + "Collection/" + sessionStorage.getItem('user_id'), formData).then((response)=>{
+          if (response.data.Id_collection == -1)
+          {
+            this.wrong_data_message = 'Kolekcja o podanej nazwie już istnieje. Wprowadź inną nazwę kolekcji.'
+            return
+          }
           this.$emit('update:overlay', false);
           this.$emit("refresh", "cokolwiek");
         }).catch((error) => {
@@ -61,6 +66,7 @@ export default {
         })
       },
       validate() {
+        this.wrong_data_message = ''
         this.$refs.form.resetValidation();
         const prom = this.$refs.form.validate();
         prom.then((a) => {
@@ -86,5 +92,11 @@ export default {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
+  width: 400px;
 }
+
+#warning {
+    color: red;
+    padding-bottom: 30px;
+  }
 </style> 

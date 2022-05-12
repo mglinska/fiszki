@@ -13,7 +13,7 @@
               :src="'https://www.uspeak.pl/wp-content/uploads/2020/11/fiszki-angielski.jpg'"
               class="white--text"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="648px"
+              height="550px"
               cover
             >
               <v-card-title>
@@ -61,41 +61,47 @@
             </v-card>
           </v-col>
           <v-col cols="12">
-            <v-card
-              color="#1F7087"
-              theme="dark"
-              height="528px"
-            >
-                  <v-card-title>
-                    <span class="card_title">Twórz własne nielimitowane kolekcje i ucz się czego tylko chcesz!</span>
-                  </v-card-title>
+            <v-card>
+              <v-img
+                :src="'https://www.centrumpomyslow.pl/system/cache/img/5d1b3f6cdbf78-711omq9svm80.jpg'"
+                class="white--text"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="500px"
+                cover
+              >
+                <v-card-title>
+                  <span class="card_title">Twórz własne nielimitowane kolekcje i ucz się czego tylko chcesz!</span>
+                </v-card-title>
 
-                  <v-card-subtitle>
-                    <span class="card_description">Nasi użytkownicy aktywnie tworzą nowe kolekcje, z których uczą się następnie w specjalnie przygotowanym trybie uczenia. 
-                      Obecnie udało im się utworzyć już {{ collections_sum }} najróżniejszych unikatowych kolekcji.
-                    </span>
-                  </v-card-subtitle>
+                <v-card-subtitle>
+                  <span class="card_description">Nasi użytkownicy aktywnie tworzą nowe kolekcje, z których uczą się następnie w specjalnie przygotowanym trybie uczenia. 
+                    Obecnie udało im się utworzyć już {{ collections_sum }} najróżniejszych unikatowych kolekcji.
+                  </span>
+                </v-card-subtitle>
+              </v-img>
             </v-card>
           </v-col>
 
           <v-col cols="12">
-            <v-card
-              color="#952175"
-              theme="dark"
-              height="362px"
-            >
-            
-              <v-card-title class="text-h5 space">
-                <span class="card_title">Aż tyle?</span>
-              </v-card-title>
+            <v-card>
+              <v-img
+                :src="'https://nauczona.pl/wp-content/uploads/2020/01/IMG-0309.jpg'"
+                class="white--text"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="350px"
+                cover
+              >
+          
+                <v-card-title class="text-h5 space">
+                  <span class="card_title">Aż tyle?</span>
+                </v-card-title>
 
-              <v-card-subtitle>
-                <span class="card_description">Nasi użytkownicy nie próżnują i ciągle tworzą nowe fiszki i pogłębiają swoją wiedzę. 
-                Na ten moment udało im się utworzyć w swoich kolekcjach łącznie {{ flashcards_sum }} fiszek!
-                </span>
-              </v-card-subtitle>
-                
-
+                <v-card-subtitle>
+                  <span class="card_description">Nasi użytkownicy nie próżnują i ciągle tworzą nowe fiszki i pogłębiają swoją wiedzę. 
+                  Na ten moment udało im się utworzyć w swoich kolekcjach łącznie {{ flashcards_sum }} fiszek!
+                  </span>
+                </v-card-subtitle>
+              </v-img>
             </v-card>
           </v-col>
         </v-row>
@@ -165,18 +171,19 @@ export default {
   .card_title {
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    font-size: 82px;
+    font-size: 64px;
     line-height: 1;
     color: white;
+    padding: 30px;
   }
 
   .card_description {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
-    font-size: 48px;
-    margin-top: 10px;
+    font-size: 32px;
     color: white;
     line-height: 1;
     text-align: justify;
+    padding: 30px;
   }
 </style>
