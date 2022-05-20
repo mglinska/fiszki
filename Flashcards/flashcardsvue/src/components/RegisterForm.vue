@@ -115,7 +115,6 @@
         
         axios.post("http://localhost:5085/api/" + "User/register", formData).then(()=>{
           this.$router.push({ name: 'Home'});
-          alert("the form has been sent");
         }).catch(() => {
           this.server_error_message = 'Przepraszamy, wystąpił błąd serwera. Nie można teraz utworzyć nowego konta.'
         })
