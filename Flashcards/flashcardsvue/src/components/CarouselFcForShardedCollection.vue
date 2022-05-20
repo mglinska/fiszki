@@ -1,66 +1,72 @@
 <template>
     <div id="learn_body">
+      <Options v-if="start == false" @setup="setup($event)" />
+      <div v-else>
         <div style="margin: auto; text-align: center;">
             <h1 style="padding: 50px 0;"> {{ coll_name }} </h1>
         </div>
-      <div id="carousel_conatainer">
-        <v-carousel 
-          hide-delimiters
-          v-model="currentIndex"
-        >
-          <v-carousel-item
-            v-for="(fc, i) in flashcards"
-            :key="i"
+        <div id="carousel_conatainer">
+          <v-carousel 
+            hide-delimiters
+            v-model="currentIndex"
           >
-            <div class="d-flex fill-height justify-center align-center">
-              <div :id="'flashcard'+i" class="flip-card">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <div v-if="!end">
+            <v-carousel-item
+              v-for="(fc, i) in flashcards"
+              :key="i"
+            >
+              <div class="d-flex fill-height justify-center align-center">
+                <div :id="'flashcard'+i" class="flip-card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <div v-if="!end">
+                        <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
+                        <span v-if="site == false" class="text-h2"> {{ fc.Question }} </span>
+                        <span v-else class="text-h2"> {{ fc.Answer }} </span>
+                        <br>
+                        <v-btn @click="check(fc, i)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
+                      </div>
+                      <div v-if="end">
+                        <h3>Udało Ci się ukończyć naukę!</h3>
+                        <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
+                      </div>
+                    </div>
+                    
+                    <div class="flip-card-back">
                       <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
-                      <span class="text-h2"> {{ fc.Question }} </span>
+                      <span v-if="site == false" class="text-h2"> {{ fc.Answer }} </span>
+                      <span else class="text-h2"> {{ fc.Question }} </span>
                       <br>
-                      <v-btn @click="check(fc, i)" class="check" variant="contained-text" color="white">Sprawdź</v-btn>
-                    </div>
-                    <div v-if="end">
-                      <h3>Udało Ci się ukończyć naukę!</h3>
-                      <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
-                    </div>
-                  </div>
-                  
-                  <div class="flip-card-back">
-                    <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
-                    <span class="text-h2"> {{ fc.Answer }} </span>
-                    <br>
-                    <v-btn @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
-                    <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-carousel-item>
-
-          <v-carousel-item v-if="flashcards.length == 0">
-            <div class="d-flex fill-height justify-center align-center">
-              <div class="flip-card">
-                <div class="flip-card-inner">
-                  <div class="flip-card-front">
-                    <div v-if="!end">
-                      <h3>Ups! Najwyraźniej nie dodano żadnych fiszek do tej kolekcji!</h3>
+                      <v-btn @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
+                      <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </v-carousel-item>
+            </v-carousel-item>
 
-        </v-carousel>
+            <v-carousel-item v-if="flashcards.length == 0">
+              <div class="d-flex fill-height justify-center align-center">
+                <div class="flip-card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <div v-if="!end">
+                        <h3>Ups! Najwyraźniej nie dodano żadnych fiszek do tej kolekcji!</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </v-carousel-item>
+
+          </v-carousel>
+        </div>
       </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Options from './LerningModeOptions.vue'
 
 export default {
     props: {
@@ -76,6 +82,8 @@ export default {
         fc_id: null,
         currentIndex: 0,
         end: false,
+        start: false,
+        site: false,
       }
     },
     watch: {
@@ -147,6 +155,31 @@ export default {
             fc.classList.remove('flip-card-clicked');
         }, 200)
       },
+      randomArrayShuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+        }
+        return array
+      },
+      setup ({ random, site }) {
+        if (random == 'TAK') {
+          this.flashcards = this.randomArrayShuffle(this.flashcards);
+        }
+
+        if (site == 'TAK') {
+          this.site = !this.site;
+        }
+
+        this.start = !this.start;
+      }
+    },
+    components: {
+      Options,
     },
     mounted: function() {
       this.refreshData();

@@ -111,7 +111,6 @@ export default {
         this.$router.push({ name: 'NoPermissionPage'});
       }
       this.refreshData();
-      console.log(this.user_name);
     }
 }
 </script>
