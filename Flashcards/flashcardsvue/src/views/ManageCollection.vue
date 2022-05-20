@@ -9,32 +9,32 @@
       <br>
       <v-btn @click="overlay1 = !overlay1" icon="mdi-plus-box-multiple" id="label-add" variant="contained-text" color="white"></v-btn>
 
-    <div id="flashcard_container">
-      <v-responsive>
-        <v-card
-          id="flashcard-interior"
-          class="mx-auto"
-          max-width="344"
-          v-for="fc in flashcards" 
-          :key="fc.Id_flashcard"
-        >
-          <v-card-title>
-            {{ fc.Question }}
-          </v-card-title>
+      <div id="flashcard_container">
+        <v-responsive>
+          <v-card
+            id="flashcard-interior"
+            class="mx-auto"
+            max-width="344"
+            v-for="fc in flashcards" 
+            :key="fc.Id_flashcard"
+          >
+            <v-card-title>
+              {{ fc.Question }}
+            </v-card-title>
 
-          <v-card-subtitle>
-            {{ fc.Answer }}
-          </v-card-subtitle>
+            <v-card-subtitle>
+              {{ fc.Answer }}
+            </v-card-subtitle>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn @click="deleteFlashcard(fc.Id_flashcard)" size="small" color="white" icon="mdi-trash-can" variant="text">
-            </v-btn>
-            <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard; this.temp_awers = fc.Question; this.temp_rewers = fc.Answer" size="small" color="white" icon="mdi-pencil" variant="text">
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-responsive>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="deleteFlashcard(fc.Id_flashcard)" size="small" color="white" icon="mdi-trash-can" variant="text">
+              </v-btn>
+              <v-btn @click="overlay2 = !overlay2; this.fc_id = fc.Id_flashcard; this.temp_awers = fc.Question; this.temp_rewers = fc.Answer" size="small" color="white" icon="mdi-pencil" variant="text">
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-responsive>
       </div>
 
       <v-overlay v-model="overlay1" class="align-center justify-center">

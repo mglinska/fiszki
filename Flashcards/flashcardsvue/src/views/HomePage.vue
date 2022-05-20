@@ -12,19 +12,19 @@
               <v-img
               :src="'https://www.uspeak.pl/wp-content/uploads/2020/11/fiszki-angielski.jpg'"
               class="white--text"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="550px"
+              gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
+              height="500px"
               cover
             >
               <v-card-title>
                 <span class="card_title">Nauka poprzez fiszki</span>
               </v-card-title>
-              <v-card-subtitle>
-                <span class="card_description">Niemiecki uczony Sebastian Leitner po latach badań nad mechanizmami zapominania, opracował system nauki oparty na 'fiszkach'. 
+              <div class="card_description">
+                <span>Niemiecki uczony Sebastian Leitner po latach badań nad mechanizmami zapominania, opracował system nauki oparty na 'fiszkach'. 
                   Uważał on, że dzięki tej metodzie każdy człowiek może nauczyć się aż 10 języków obcych. 
                   Oczywiście fiszk idealnie mogą pasować do nauki wielu zagadnień z inncyh dziedzin. 
                   Załóż u nas konto, twórz swoje zestawy fiszek, ucz się i przekonaj się sam o skuteczności tej metody!</span>
-              </v-card-subtitle>
+              </div>
             </v-img>
             
               <v-card-actions>
@@ -46,17 +46,17 @@
                 <v-img
                 :src="'https://www.csee-etuce.org/images/Pictures/ICT/STUDENTS-ON-COMPUTERS.jpg'"
                 class="white--text"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="416px"
                 cover
               >
                 <v-card-title>
                   <span class="card_title">Nasi użytkownicy</span>
                 </v-card-title>
-                <v-card-subtitle>
-                  <span class="card_description">Obecnie z naszej strony korzysta <strong>{{ users_sum }}</strong> zadowolnych użytkowników 
+                <div class="card_description">
+                  <span>Obecnie z naszej strony korzysta <strong>{{ users_sum }}</strong> zadowolnych użytkowników 
                   a ich liczba rośnie z każdym kolejnym dniem! Dołącz do nich i zacznij pamiętać więcej i na dłużej. Pozwoł sobie uczynić swoją naukę jeszcze bardziej przyjemną i skutczeną!</span>
-                </v-card-subtitle>
+                </div>
               </v-img>
             </v-card>
           </v-col>
@@ -65,7 +65,7 @@
               <v-img
                 :src="'https://www.centrumpomyslow.pl/system/cache/img/5d1b3f6cdbf78-711omq9svm80.jpg'"
                 class="white--text"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="500px"
                 cover
               >
@@ -73,11 +73,11 @@
                   <span class="card_title">Twórz własne nielimitowane kolekcje i ucz się czego tylko chcesz!</span>
                 </v-card-title>
 
-                <v-card-subtitle>
-                  <span class="card_description">Nasi użytkownicy aktywnie tworzą nowe kolekcje, z których uczą się następnie w specjalnie przygotowanym trybie uczenia. 
+                <div class="card_description">
+                  <span>Nasi użytkownicy aktywnie tworzą nowe kolekcje, z których uczą się następnie w specjalnie przygotowanym trybie uczenia. 
                     Obecnie udało im się utworzyć już {{ collections_sum }} najróżniejszych unikatowych kolekcji.
                   </span>
-                </v-card-subtitle>
+                </div>
               </v-img>
             </v-card>
           </v-col>
@@ -87,7 +87,7 @@
               <v-img
                 :src="'https://nauczona.pl/wp-content/uploads/2020/01/IMG-0309.jpg'"
                 class="white--text"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="350px"
                 cover
               >
@@ -96,11 +96,11 @@
                   <span class="card_title">Aż tyle?</span>
                 </v-card-title>
 
-                <v-card-subtitle>
-                  <span class="card_description">Nasi użytkownicy nie próżnują i ciągle tworzą nowe fiszki i pogłębiają swoją wiedzę. 
+                <div class="card_description">
+                  <span>Nasi użytkownicy nie próżnują i ciągle tworzą nowe fiszki i pogłębiają swoją wiedzę. 
                   Na ten moment udało im się utworzyć w swoich kolekcjach łącznie {{ flashcards_sum }} fiszek!
                   </span>
-                </v-card-subtitle>
+                </div>
               </v-img>
             </v-card>
           </v-col>
@@ -184,6 +184,6 @@ export default {
     color: white;
     line-height: 1;
     text-align: justify;
-    padding: 30px;
+    padding: 30px 50px;
   }
 </style>
