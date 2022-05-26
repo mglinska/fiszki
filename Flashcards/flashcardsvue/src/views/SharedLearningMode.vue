@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CarouselShared from '../components/CarouselFcForShardedCollection.vue'
+import CarouselShared from '../components/CarouselFcForSharedCollection.vue'
 
 export default {
   props: {

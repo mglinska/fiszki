@@ -7,10 +7,10 @@
       <v-container>
         <v-row dense>
           <v-col cols="12">
-            <v-card>
+            <v-card class="infoCard">
               <v-img
               :src="'https://www.uspeak.pl/wp-content/uploads/2020/11/fiszki-angielski.jpg'"
-              class="white--text"
+              class="white--text img"
               gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
               height="500px"
               cover
@@ -41,10 +41,10 @@
             </v-card>
           </v-col>
           <v-col cols="12">
-            <v-card>
+            <v-card class="infoCard">
                 <v-img
                 :src="'https://www.csee-etuce.org/images/Pictures/ICT/STUDENTS-ON-COMPUTERS.jpg'"
-                class="white--text"
+                class="white--text img"
                 gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="416px"
                 cover
@@ -60,10 +60,10 @@
             </v-card>
           </v-col>
           <v-col cols="12">
-            <v-card>
+            <v-card class="infoCard">
               <v-img
                 :src="'https://www.centrumpomyslow.pl/system/cache/img/5d1b3f6cdbf78-711omq9svm80.jpg'"
-                class="white--text"
+                class="white--text img"
                 gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="500px"
                 cover
@@ -82,10 +82,10 @@
           </v-col>
 
           <v-col cols="12">
-            <v-card>
+            <v-card class="infoCard">
               <v-img
                 :src="'https://nauczona.pl/wp-content/uploads/2020/01/IMG-0309.jpg'"
-                class="white--text"
+                class="white--text img"
                 gradient="to bottom, rgba(0,0,0,.4), rgba(0,0,0,.8)"
                 height="350px"
                 cover
