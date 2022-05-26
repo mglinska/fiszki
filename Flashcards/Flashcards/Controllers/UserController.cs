@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Flashcards.Controllers {
     [Route("api/[controller]")]
@@ -44,7 +46,7 @@ namespace Flashcards.Controllers {
         // --- Aktualizacja danych użytkownika
         [HttpPut]
         public async Task<ActionResult<User>> UpdateUser( User user ) {
-            try {
+            try {            
                 return Ok(await _userRepository.UpdateUser(user));
             } catch (Exception ex) {
                 return BadRequest(ex.InnerException.Message);
@@ -56,6 +58,21 @@ namespace Flashcards.Controllers {
         [HttpPost]
         public async Task<ActionResult<User>> RegisterUser( User user ) {
             try {
+                string password = user.Password;
+                byte[] salt = new byte[128 / 8];
+                using (var rngCsp = new RNGCryptoServiceProvider()) {
+                    rngCsp.GetNonZeroBytes(salt);
+                }
+
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: password,
+                    salt: salt,
+                    prf: KeyDerivationPrf.HMACSHA256,
+                    iterationCount: 100000,
+                    numBytesRequested: 256 / 8));
+
+                user.Password = Convert.ToBase64String(salt) + "$" + hashed;
+
                 return Ok(await _userRepository.RegisterUser(user));
             } catch (Exception ex) {
                 return BadRequest(ex.InnerException.Message);
@@ -69,6 +86,20 @@ namespace Flashcards.Controllers {
         public async Task<ActionResult<User>> LoginUser( User user ) {
             try {
                 User loginUser = await _userRepository.GetUserByLogin(user.Email);
+
+                string password = user.Password;
+
+                string saltString = loginUser.Password.Split("$")[0];
+                byte[] salt = Convert.FromBase64String(saltString);
+
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: password,
+                    salt: salt,
+                    prf: KeyDerivationPrf.HMACSHA256,
+                    iterationCount: 100000,
+                    numBytesRequested: 256 / 8));
+
+                user.Password = Convert.ToBase64String(salt) + "$" + hashed;
 
                 if (loginUser != null) {
                     if (user.Password.Equals(loginUser.Password)) {
