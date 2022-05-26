@@ -50,7 +50,11 @@ export default {
       navigator.clipboard.writeText(copyText.textContent);
     },
     add_link_to_db() {
-      let datetime = new Date().toJSON().replace(/-/g,'-')
+      let days = 14;
+      let datetime = new Date(Date.now() + days * 24*60*60*1000 + 7200 * 1000);
+      datetime = datetime.toJSON().replace(/-/g,'-');
+      console.log(datetime);
+
       const formData = {};
       formData['url'] = this.generated;
       formData['expiration_time'] = datetime;
