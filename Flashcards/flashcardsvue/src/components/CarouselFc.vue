@@ -29,6 +29,7 @@
                       </div>
                       <div v-if="end">
                         <h3>Udało Ci się ukończyć naukę!</h3>
+                        <h4>Czas nauki: {{ time }}</h4>
                         <v-btn @click="this.$router.go(-1)" class="end_button" variant="contained-text" color="white">Wróć do kolekcji</v-btn>
                         <v-btn @click="this.refreshData(); this.end = false;" class="end_button" variant="contained-text" color="white">Ucz się od początku</v-btn>
                       </div>
@@ -37,7 +38,7 @@
                     <div class="flip-card-back">
                       <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
                       <span v-if="site == false" class="text-h2"> {{ fc.Answer }} </span>
-                      <span else class="text-h2"> {{ fc.Question }} </span>
+                      <span v-else class="text-h2"> {{ fc.Question }} </span>
                       <br>
                       <v-btn @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
                       <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>
@@ -87,6 +88,8 @@ export default {
         end: false,
         start: false,
         site: false,
+        start_time: 0,
+        time: 0,
       }
     },
     watch: {
@@ -125,6 +128,8 @@ export default {
           {
             document.querySelector(".flip-card-clicked").classList.remove('flip-card-clicked');
             this.end = true;
+            let seconds = (new Date() - this.start_time) / 1000;
+            this.time = new Date(seconds * 1000).toISOString().substr(11, 8);
             return;
           }
             this.currentIndex = 0;
@@ -165,7 +170,7 @@ export default {
         }
         return array
       },
-      setup ({ random, site }) {
+      setup ({ random, site, start_time }) {
         if (random == 'TAK') {
           this.flashcards = this.randomArrayShuffle(this.flashcards);
         }
@@ -175,6 +180,7 @@ export default {
         }
 
         this.start = !this.start;
+        this.start_time = start_time;
       }
     },
     components: {
@@ -225,16 +231,19 @@ export default {
 
   .memorized {
     position: absolute;
-        left: 80%;
-        top: 83%;
+        left: 85%;
+        bottom: 5%;
+        transform: translate(-50%, 0);
         background-color: rgb(32,124,92)
   }
 
   .check {
+    position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translate(-50%, 0);
     background-color: rgb(32,124,92);
-    margin-top: 17.5%;
     width: 100px;
-    
   }
 
   .end_button {

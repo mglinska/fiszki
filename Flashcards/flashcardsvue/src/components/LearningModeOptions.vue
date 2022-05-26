@@ -43,7 +43,7 @@
     },
     methods: {
         send() {
-            this.$emit('setup', { random: this.random, site: this.site })
+            this.$emit('setup', { random: this.random, site: this.site, start_time: new Date()})
         }
     },
   }
