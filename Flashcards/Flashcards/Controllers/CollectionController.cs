@@ -53,9 +53,9 @@ namespace Flashcards.Controllers {
 
         // --- Aktualizacja danych kolekcji
         [HttpPut]
-        public async Task<ActionResult<Collection>> UpdateCollection( Collection collection ) {
+        public async Task<ActionResult<Collection>> UpdateCollection( Collection collection, int userId ) {
             try {
-                return Ok(await _collectionRepository.UpdateCollection(collection));
+                return Ok(await _collectionRepository.UpdateCollection(collection, userId));
             } catch (Exception ex) {
                 return BadRequest(ex.InnerException.Message);
             }
