@@ -65,9 +65,6 @@ namespace Flashcards.Models {
                 //result.Created_on = collection.Created_on;
                 //result.Description = collection.Description;
 
-                _context.Entry(result).CurrentValues.SetValues(collection);
-                await _context.SaveChangesAsync();
-
                 var allCollectionsUser = await _context.Collection_user.Where(u => u.Id_user == userId).ToListAsync();
 
                 foreach (var col in allCollectionsUser) {
@@ -81,6 +78,10 @@ namespace Flashcards.Models {
                         }
                     }
                 }
+
+                _context.Entry(result).CurrentValues.SetValues(collection);
+                await _context.SaveChangesAsync();
+
 
                 return result;
             }
