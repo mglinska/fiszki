@@ -23,7 +23,7 @@ namespace Flashcards.Controllers {
 
         // --- Pobranie linku po url
         [HttpGet("{url}")]
-        public async Task<ActionResult<Collection>> GetLinkByUrl( string url ) {
+        public async Task<ActionResult<Link>> GetLinkByUrl( string url ) {
             try {
                 url = url.Replace("%2F", "/");
 
@@ -33,13 +33,25 @@ namespace Flashcards.Controllers {
             }
         }
 
-        // --- Utworzenie nowej kolekcji
+        // --- Utworzenie nowego linku
         [HttpPost]
-        public async Task<ActionResult<Collection>> CreateLink( Link link ) {
+        public async Task<ActionResult<Link>> CreateLink( Link link ) {
             try {
                 link.Url = link.Url.Replace("%2F", "/");
 
                 return Ok(await _linkRepository.CreateLink(link));
+            } catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // --- Sprawdzenie czy link występuje w bazie danych
+        [HttpPost("{url}")]
+        public async Task<ActionResult<bool>> CheckLink( string url ) {
+            try {
+                url = url.Replace("%2F", "/");
+
+                return Ok(await _linkRepository.CheckLink(url));
             } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }

@@ -46,6 +46,16 @@ namespace Flashcards.Models {
             }
         }
 
+        public async Task<bool> CheckLink( string url ) {
+            var result = await _context.Link.FirstOrDefaultAsync(l => l.Url == url);
+
+            if (result != null) {
+                return true;
+            }
+
+            return false;
+        }
+
 
         public async Task<string> RemoveExpiredLink() {
             try {
