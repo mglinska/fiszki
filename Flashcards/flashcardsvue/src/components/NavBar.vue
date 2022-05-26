@@ -18,7 +18,7 @@
 
       <v-spacer></v-spacer>
 
-        <v-tabs align-with-title>
+        <v-tabs align-with-title hide-slider>
           <v-tab class="link" :to="{ name: 'Home'}">Strona główna</v-tab>
           <v-tab v-if="user_id == null" class="link" :to="{ name: 'Login'}">Zaloguj</v-tab>
           <v-tab v-if="user_id == null" class="link" :to="{ name: 'Registration'}">Zarejestruj</v-tab>

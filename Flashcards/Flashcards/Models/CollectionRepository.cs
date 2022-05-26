@@ -56,7 +56,7 @@ namespace Flashcards.Models {
             return null;
         }
 
-        public async Task<Collection> UpdateCollection( Collection collection ) {
+        public async Task<Collection> UpdateCollection( Collection collection, int userId ) {
             var result = await _context.Collection.FirstOrDefaultAsync(c => c.Id_collection == collection.Id_collection);
 
             if (result != null) {
@@ -65,8 +65,23 @@ namespace Flashcards.Models {
                 //result.Created_on = collection.Created_on;
                 //result.Description = collection.Description;
 
+                var allCollectionsUser = await _context.Collection_user.Where(u => u.Id_user == userId).ToListAsync();
+
+                foreach (var col in allCollectionsUser) {
+                    Collection collectionU = await _context.Collection.FirstOrDefaultAsync(c => c.Id_collection == col.Id_collection);
+
+                    if (collectionU != null) {
+                        if (collectionU.Name == collection.Name) {
+                            result.Id_collection = -1;
+
+                            return result;
+                        }
+                    }
+                }
+
                 _context.Entry(result).CurrentValues.SetValues(collection);
                 await _context.SaveChangesAsync();
+
 
                 return result;
             }

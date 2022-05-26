@@ -70,6 +70,9 @@
           let zmienna = response.data;
           sessionStorage.setItem('user_id', zmienna.Id_user);
           let message = 'Witaj ponownie ' + zmienna.First_name;
+
+          axios.delete("http://localhost:5085/api/" + "Link").then().catch();
+
           this.$router.push({ name: 'Collections', params: { username: message }});
         }).catch(() => {
           this.wrong_data_message = 'Niepoprawne dane logowania!'

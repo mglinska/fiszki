@@ -1,6 +1,6 @@
 <template>
   <div id="background">
-    <v-input id="input_with_link" :messages="link" class="XD">
+    <v-input id="input_with_link" :messages="link">
       <h3>Link do udostępnienia:</h3>
     </v-input>
     <v-btn
@@ -18,13 +18,14 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 export default {
   props: ['coll_name', 'coll_id'],
   data() {
     return {
       link: '',
-      shared_link: 'shared_link'
+      shared_link: 'shared_link',
+      generated: '',
     }
   },
   methods: {
@@ -38,7 +39,7 @@ export default {
       let collName = this.encrypt(this.coll_name);
       let collId = this.encrypt(this.coll_id);
       this.link = base + collName + '-' + collId + '-' + admixture
-      console.log(this.link);
+      this.generated = collName + '-' + collId + '-' + admixture
     },
 
     copy_to_clipboard() {
@@ -47,11 +48,23 @@ export default {
       
       /* Copy the text inside the text field */
       navigator.clipboard.writeText(copyText.textContent);
+    },
+    add_link_to_db() {
+      let days = 14;
+      let datetime = new Date(Date.now() + days * 24*60*60*1000 + 7200 * 1000);
+      datetime = datetime.toJSON().replace(/-/g,'-');
+      console.log(datetime);
+
+      const formData = {};
+      formData['url'] = this.generated;
+      formData['expiration_time'] = datetime;
+      axios.post("http://localhost:5085/api/" + "Link", formData).then().catch();
     }
   },
 
   mounted: function() {
       this.generate_link();
+      this.add_link_to_db();
     },
 }
 </script>
