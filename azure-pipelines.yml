@@ -23,6 +23,11 @@ steps:
   inputs:
     version: '6.x'
 
+- task: Npm@1
+  displayName: 'Run npm install'
+  inputs:
+    verbose: false
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
