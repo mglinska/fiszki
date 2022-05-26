@@ -12,7 +12,6 @@
     <v-text-field
       class="form-text"
       v-model="name"
-      :counter="20"
       :rules="nameRules"
       label="Name"
       required
