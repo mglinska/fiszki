@@ -21,6 +21,11 @@ export default {
     Navbar,
     CollContent,
   },
+  mounted: function() {
+      if(sessionStorage.getItem('user_id') === null) {
+        this.$router.push({ name: 'NoPermissionPage'});
+      }
+    }
 }
 </script>
 

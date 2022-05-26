@@ -66,7 +66,7 @@
 
 <script>
 import axios from 'axios'
-import Options from './LerningModeOptions.vue'
+import Options from './LearningModeOptions.vue'
 
 export default {
     props: {

@@ -1,7 +1,7 @@
 <template>
     <div id="learn_body">
       <Options v-if="start == false" @setup="setup($event)" />
-      <div v-else>
+      <div v-else id="carousel">
         <v-btn @click="this.$router.go(-1)" icon="mdi-arrow-left-circle" variant="contained-text" color=#F0ECE4 id="return-button"></v-btn>
 
         <div style="margin: auto; text-align: center;">
@@ -70,7 +70,7 @@
 
 <script>
 import axios from 'axios'
-import Options from './LerningModeOptions.vue'
+import Options from './LearningModeOptions.vue'
 
 export default {
     props: {
@@ -181,9 +181,6 @@ export default {
       Options,
     },
     mounted: function() {
-      if(sessionStorage.getItem('user_id') === null) {
-        this.$router.push({ name: 'NoPermissionPage'});
-      }
       this.refreshData();
     },
 }
