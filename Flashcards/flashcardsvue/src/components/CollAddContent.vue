@@ -6,6 +6,7 @@
     ref="form"
     v-model="valid"
     lazy-validation
+    v-on:submit.prevent="validate"
   >
     <v-text-field
       class="text-field"
@@ -14,7 +15,9 @@
       label="Wprowadź nazwę kolekcji"
       required
     ></v-text-field>
+
     <h4 id="warning"> {{wrong_data_message}}</h4>
+
     <v-btn
       id="button-add"
       color=rgb(32,124,92)

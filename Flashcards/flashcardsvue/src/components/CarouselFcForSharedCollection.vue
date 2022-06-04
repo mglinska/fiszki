@@ -34,7 +34,7 @@
                     <div class="flip-card-back">
                       <span class="counter text-h4"> {{i+1}}/{{this.flashcards.length}}</span>
                       <span v-if="site == false" class="text-h2"> {{ fc.Answer }} </span>
-                      <span else class="text-h2"> {{ fc.Question }} </span>
+                      <span v-else class="text-h2"> {{ fc.Question }} </span>
                       <br>
                       <v-btn @click="check(fc)" class="check" variant="contained-text" color="white">Wróć</v-btn>
                       <v-btn @click="remove(i)" class="memorized" variant="contained-text" color="white">Pamiętam</v-btn>

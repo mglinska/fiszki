@@ -6,6 +6,7 @@
       ref="form"
       v-model="valid"
       lazy-validation
+      v-on:submit.prevent="validate"
     >
       <v-text-field
         class="text-field"
@@ -13,6 +14,7 @@
         :rules="awersRules"
         label="Awers"
         required
+        v-on:keyup.enter="validate"
       ></v-text-field>
 
       <v-text-field
@@ -20,6 +22,7 @@
         v-model="rewers"
         :rules="rewersRules"
         label="Rewers"
+        v-on:keyup.enter="validate"
       ></v-text-field>
 
       <v-btn
