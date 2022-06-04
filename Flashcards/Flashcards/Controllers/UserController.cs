@@ -87,21 +87,24 @@ namespace Flashcards.Controllers {
             try {
                 User loginUser = await _userRepository.GetUserByLogin(user.Email);
 
-                string password = user.Password;
-
-                string saltString = loginUser.Password.Split("$")[0];
-                byte[] salt = Convert.FromBase64String(saltString);
-
-                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                    password: password,
-                    salt: salt,
-                    prf: KeyDerivationPrf.HMACSHA256,
-                    iterationCount: 100000,
-                    numBytesRequested: 256 / 8));
-
-                user.Password = Convert.ToBase64String(salt) + "$" + hashed;
+                
 
                 if (loginUser != null) {
+
+                    string password = user.Password;
+
+                    string saltString = loginUser.Password.Split("$")[0];
+                    byte[] salt = Convert.FromBase64String(saltString);
+
+                    string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: password,
+                        salt: salt,
+                        prf: KeyDerivationPrf.HMACSHA256,
+                        iterationCount: 100000,
+                        numBytesRequested: 256 / 8));
+
+                    user.Password = Convert.ToBase64String(salt) + "$" + hashed;
+
                     if (user.Password.Equals(loginUser.Password)) {
                         HttpContext.Session.SetString("login", user.Email);
                         loginUser.Password = "";
