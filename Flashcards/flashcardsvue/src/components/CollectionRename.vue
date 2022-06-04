@@ -6,6 +6,7 @@
     ref="form"
     v-model="valid"
     lazy-validation
+    v-on:submit.prevent="validate"
   >
     <v-text-field 
       class="text-field"

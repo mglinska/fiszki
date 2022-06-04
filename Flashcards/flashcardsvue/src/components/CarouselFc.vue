@@ -99,6 +99,11 @@ export default {
     },
     methods: {
       refreshData() {
+        this.start = false;
+        this.start_time = 0;
+        this.time = 0;
+        this.site = false;
+
         axios
           .get("http://localhost:5085/api/" + "Flashcard/get-by-collection/" + this.coll_Id)
           .then( (response)=>{
